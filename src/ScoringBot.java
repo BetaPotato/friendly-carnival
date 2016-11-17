@@ -5,7 +5,7 @@
  */
 
 /**
- *
+ *This is the ScoringBot Object, and will do things like decide what vuln to add if there aren't enough, live scoring of computer, and make the good sound when accomplished. 
  * @author Ryan
  */
 public class ScoringBot

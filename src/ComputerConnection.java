@@ -5,7 +5,8 @@
  */
 
 /**
- *
+ *This class is what needs to be called in order to look at the computer and see anything there. Both Training and Scoringbot sides 
+ * should call this Object.
  * @author Ryan
  */
 public class ComputerConnection
