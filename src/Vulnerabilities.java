@@ -29,7 +29,7 @@ public class Vulnerabilities
         this.createCommand = createCommand;
     }
     
-    protected boolean isComputerCertified(String computer)
+    protected boolean isComputerCertified(String computer)  //Computer should be one of the defined variables above.
     {
         for (int i = 0; i < certifiedComputers.length; i++)
         {
