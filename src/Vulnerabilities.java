@@ -29,6 +29,11 @@ public class Vulnerabilities
         this.createCommand = createCommand;
     }
     
+    /**
+     * 
+     * @param computer - One of the 
+     * @return - 
+     */
     protected boolean isComputerCertified(String computer)  //Computer should be one of the defined variables above.
     {
         for (int i = 0; i < certifiedComputers.length; i++)
@@ -37,5 +42,22 @@ public class Vulnerabilities
                 return true;
         }
         return false;
+    }
+    
+    /**
+     * @return - Returns the command to create the Vulnerability onto the computer
+     */
+    protected String toCreateVuln()
+    {
+        return createCommand;
+    }
+    
+    /**
+     * 
+     * @return - The command to execute on the computer to determine if the Vulnerability is on the computer.
+     */
+    protected String toFindVuln()   //returns the command that can be executed on the computer in order to determine if the computer has the vuln or not.
+    {
+        return findCommand;
     }
 }
