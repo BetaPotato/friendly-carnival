@@ -46,7 +46,4 @@ public class RemoteArgs
 	{
 		return argument;
 	}
-	
-	
-
 }

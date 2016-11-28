@@ -20,13 +20,15 @@ public class Vulnerabilities
     public static final String UBUNTU12 =  "UBUNTU12";  //type of certified Computer
     public static final String UBUNTU14 = "UBUNTU14";
     public static final String WINDOWS7 = "WINDOWS7";
+    private final int worthPoints;
     
-    public Vulnerabilities(boolean whichOS, String[] certifiedComputers, String findCommand, String createCommand)
+    public Vulnerabilities(boolean whichOS, String[] certifiedComputers, String findCommand, String createCommand, int worthPoints)
     {
         this.certifiedComputers = certifiedComputers;
         this.findCommand = findCommand;
         this.whichOS = whichOS;
         this.createCommand = createCommand;
+        this.worthPoints = worthPoints;
     }
     
     /**
@@ -61,4 +63,8 @@ public class Vulnerabilities
         return findCommand;
     }
     
+    protected int pointsWorth()
+    {
+        return worthPoints;
+    }
 }

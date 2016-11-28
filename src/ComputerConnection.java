@@ -17,14 +17,18 @@ import java.util.concurrent.TimeUnit;
      * should call this Object.
      * @author Ryan
      */
-    abstract class ComputerConnection
+    public class ComputerConnection
     {
         
         /**
          * this is the String version of the {@link arguments}. Converted in the {@link #convertArgumentToString()} method.
          */
         protected String command = "";	//needs to be set in child class, The command that would be run, used for Key
-
+        
+        private boolean whichOS;                //This has 2 forms, false for Windows and true for Linux
+        public static final boolean LINUX = true;     //an answer for whichOS
+        public static final boolean WINDOWS = false;  //an answer for whichOS
+        
         /**
          * The String of the hostname of the computer you want to connect to.
          */
@@ -59,11 +63,12 @@ import java.util.concurrent.TimeUnit;
          * @param argument - An {@code ArrayList}<{@link RemoteArgs}> which contains all of the sections of the command you want to execute on the remote computer
          * 
          */
-        public ComputerConnection(ArrayList<RemoteArgs> argument)//, String hostname, String loginInformation)
+        public ComputerConnection(boolean whichOS)//, String hostname, String loginInformation)
         {
             //host = hostname;
             //login = loginInformation;
-            arguments = argument;
+            //arguments = argument;
+            this.whichOS = whichOS;
 
             //System.out.println("" + Thread.currentThread() +": I'm the Constructor for the new Thread. Here is everything: rem: +");
         }
@@ -100,12 +105,12 @@ import java.util.concurrent.TimeUnit;
         //The ArrayList of RemoteArgs that holds the arguments that will be executed on the computer.
         //Returns the output of {@link sendMessage()}
         
-        protected String sendMessage(ArrayList<RemoteArgs> argument)
+        protected String sendMessage(ArrayList<RemoteArgs> argument, boolean whichOS)
         {
             //host = hostname;
             //login = loginInformation;
             arguments = argument;
-            
+            this.whichOS = whichOS;
             return sendMessage();
         }
         
@@ -131,6 +136,14 @@ import java.util.concurrent.TimeUnit;
                         System.out.println(allTogether.get(5));
                         allTogether.add(command);
                         System.out.println(allTogether.get(6));*/
+                        if (whichOS)    //is true when Linux
+                        {
+                            //add the necessary extra stuff for Linux
+                        }
+                        else
+                        {
+                            //add the necessary extra stuff to execute Windows
+                        }
 
                         pb = new ProcessBuilder(allTogether);	//creates the processBuilder
                         pb.redirectErrorStream(false);	//makes sure that the Error and Output streams are not combined
