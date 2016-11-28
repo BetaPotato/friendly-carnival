@@ -30,9 +30,9 @@ public class Vulnerabilities
     }
     
     /**
-     * 
-     * @param computer - One of the 
-     * @return - 
+     * Tests to see if the computer given can use this Vulnerability.
+     * @param computer - The type of computer that you want to test.
+     * @return - If the Vulnerability can be used in {@code computer}
      */
     protected boolean isComputerCertified(String computer)  //Computer should be one of the defined variables above.
     {
@@ -60,4 +60,5 @@ public class Vulnerabilities
     {
         return findCommand;
     }
+    
 }
