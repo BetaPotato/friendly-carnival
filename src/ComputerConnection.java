@@ -115,6 +115,11 @@ import java.util.concurrent.TimeUnit;
         //The ArrayList of RemoteArgs that holds the arguments that will be executed on the computer.
         //Returns the output of {@link sendMessage()}
         
+        protected void setOS(boolean whichOS)
+        {
+            this.whichOS = whichOS;
+        }
+        
         /**
          * This method executes the given command on the computer, and captures the standard output, error and status and returns it.
          * @param argument The command that will be executed on the computer split up into sections of surrounded in quotes and not in quotes
@@ -171,6 +176,7 @@ import java.util.concurrent.TimeUnit;
                         {
                             //add the necessary extra stuff for Linux
                             allTogether.add("/bin/bash");
+                            allTogether.add("-s");
                             for (int i = 0; i < command.size(); i++)
                             {
                                 allTogether.add(command.get(i));
