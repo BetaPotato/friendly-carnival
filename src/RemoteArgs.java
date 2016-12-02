@@ -27,8 +27,8 @@ public class RemoteArgs
 	 */
 	public RemoteArgs(String argument, boolean isInQuotes)
 	{
-		this.argument = argument;
-		inQuotes = isInQuotes;
+            this.argument = argument;
+            inQuotes = isInQuotes;
 	}
 
 	/**
@@ -36,7 +36,7 @@ public class RemoteArgs
 	 */
 	public boolean isInQuotes()
 	{
-		return inQuotes;
+            return inQuotes;
 	}
 
 	/**
@@ -44,6 +44,6 @@ public class RemoteArgs
 	 */
 	public String getArgument()
 	{
-		return argument;
+            return argument;
 	}
 }
