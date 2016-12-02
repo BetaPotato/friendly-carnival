@@ -23,7 +23,7 @@ import java.util.concurrent.TimeUnit;
         /**
          * this is the String version of the {@link arguments}. Converted in the {@link #convertArgumentToString()} method.
          */
-        protected String command = "";	//needs to be set in child class, The command that would be run, used for Key
+        protected ArrayList<String> command = new ArrayList<String>();	//needs to be set in child class, The command that would be run, used for Key
         
         private boolean whichOS;                //This has 2 forms, false for Windows and true for Linux
         public static final boolean LINUX = true;     //an answer for whichOS
@@ -58,17 +58,17 @@ import java.util.concurrent.TimeUnit;
          //@param hostname - The String of the hostname of the computer you want to connect to.
          //@param loginInformation - The information that is used in order to log into the remote computer (like password, keyPath, username).
          
-        /**
-         * Initializes the talker object. 
-         * @param argument - An {@code ArrayList}<{@link RemoteArgs}> which contains all of the sections of the command you want to execute on the remote computer
-         * 
-         */
+       /**
+        * 
+        * @param whichOS 
+        */
         public ComputerConnection(boolean whichOS)//, String hostname, String loginInformation)
         {
             //host = hostname;
             //login = loginInformation;
             //arguments = argument;
             this.whichOS = whichOS;
+            executeTime = 60000;
 
             //System.out.println("" + Thread.currentThread() +": I'm the Constructor for the new Thread. Here is everything: rem: +");
         }
@@ -82,21 +82,31 @@ import java.util.concurrent.TimeUnit;
         {
                 if(!Thread.currentThread().isInterrupted())	
                 {
+                    String[] commandseg;
                         for (int i = 0; i < arguments.size(); i++)
                         {
-                                if(i != 0)	//so that the command that is sent to SSH or Windows is properly spaced out, there isn't an extra space at beginning or ending and all the separate arguments have spaces
-                                        command += " ";
+                                //if(i != 0)	//so that the command that is sent to SSH or Windows is properly spaced out, there isn't an extra space at beginning or ending and all the separate arguments have spaces
+                                  //      commandseg += " ";
                                 if(!Thread.currentThread().isInterrupted())	//if the thread is interrupted, tell who needs to know that died and then kill self
                                 {
                                         if(!arguments.get(i).isInQuotes())
-                                                command += arguments.get(i).getArgument();
+                                                commandseg = arguments.get(i).getArgument().split(" "); //commandseg += arguments.get(i).getArgument();
                                         else
-                                                command += ("\"" + arguments.get(i).getArgument() + "\"");
+                                        {
+                                                commandseg = new String[1];
+                                                commandseg[0] = ("\"" + arguments.get(i).getArgument() + "\"");
+                                        }
                                         Thread.yield();
+                                        
+                                        for (int a = 0; a < commandseg.length; a++)
+                                        {
+                                            command.add(commandseg[a]);
+                                        }
                                 }
                                 else
                                         throw new InterruptedException();
                         }
+                        System.out.println(command);
                 }
                 else
                         throw new InterruptedException();
@@ -105,6 +115,26 @@ import java.util.concurrent.TimeUnit;
         //The ArrayList of RemoteArgs that holds the arguments that will be executed on the computer.
         //Returns the output of {@link sendMessage()}
         
+        /**
+         * This method executes the given command on the computer, and captures the standard output, error and status and returns it.
+         * @param argument The command that will be executed on the computer split up into sections of surrounded in quotes and not in quotes
+         * @return Returns the output of the command executed on the computer.
+         */
+        protected String sendMessage(ArrayList<RemoteArgs> argument)
+        {
+            //host = hostname;
+            //login = loginInformation;
+            arguments = argument;
+            //this.whichOS = whichOS;
+            return sendMessage();
+        }
+        
+        /**
+         * This method executes the given command on the computer, and captures the standard output, error and status and returns it.
+         * @param argument The command that will be executed on the computer split up into sections of surrounded in quotes and not in quotes
+         * @param whichOS A boolean for which Operating System the ScoringBot is getting run on. Use {@link LINUX} and {@link WINDOWS}
+         * @return Returns the output of the command executed on the computer.
+         */
         protected String sendMessage(ArrayList<RemoteArgs> argument, boolean whichOS)
         {
             //host = hostname;
@@ -118,14 +148,15 @@ import java.util.concurrent.TimeUnit;
          * This method executes the given command on the computer, and captures the standard output, error and status and returns it.
          * @return Returns the standard output, error, and status in that order, separated by :
          */
-        protected String sendMessage()		//goes out to SSH or Windows
+        private String sendMessage()		//goes out to SSH or Windows
         {
                 Process p = null;
                 try
                 {
                         System.out.println("Breaking up the information given and sorting it");
-
-                        List<String> allTogether = new ArrayList<>();	//sets up the List that is given to the ProcessBuilder to use to execute winexe
+                        convertArgumentToString();
+                        System.out.println(command);
+                        List<String> allTogether = new ArrayList<String>();	//sets up the List that is given to the ProcessBuilder to use to execute winexe
                         /*allTogether.add("/mbs/sbin/winexe");
                         allTogether.add("--debug-stderr");	//no say in matter, must stay. This makes sure that the Errors and the Outputs are separated
                         allTogether.add("--uninstall");
@@ -139,16 +170,35 @@ import java.util.concurrent.TimeUnit;
                         if (whichOS)    //is true when Linux
                         {
                             //add the necessary extra stuff for Linux
+                            allTogether.add("/bin/bash");
+                            for (int i = 0; i < command.size(); i++)
+                            {
+                                allTogether.add(command.get(i));
+                            }
                         }
                         else
                         {
                             //add the necessary extra stuff to execute Windows
+                            allTogether.add("C:\\Windows\\System32\\cmd.exe");
+                            allTogether.add("/c"); // has /c start
+                            //allTogether.add("start");
+                            //allTogether.add("echo");
+                            //allTogether.add(command); apparently this causes the entire command to get shoved together in quotes
+                            for (int i = 0; i < command.size(); i++)
+                            {
+                                allTogether.add(command.get(i));
+                            }
+                            //allTogether.add(">>");
+                            //allTogether.add("stuffier.txt");
+                            //allTogether.add("pause");
                         }
+                        System.out.println(allTogether);
 
                         pb = new ProcessBuilder(allTogether);	//creates the processBuilder
                         pb.redirectErrorStream(false);	//makes sure that the Error and Output streams are not combined
 
                         p = pb.start();	//starts the execution, and saves the currently executing thing as a Process
+                        
                         if(!p.waitFor(executeTime, TimeUnit.MILLISECONDS))	//waits for the process for a given amount of milliseconds to finish. If not finished within that amount of time, assumed that it died in a horrible way
                         {
                                 p.destroyForcibly();	//if waiting for task to finish took too long, then forcibly end the subprocess before saying that bad things happened
@@ -204,7 +254,7 @@ import java.util.concurrent.TimeUnit;
 
             /**
              * Removes any \r that may be in the output/error/status that comes from Windows machines.
-             * @param info - The status from {@link #setValue(String, String)
+             * @param info The status from {@link #setValue(String, String)
              * @return A line feed String.
              */
             protected String check(String info) //[look for the \r and \n]
