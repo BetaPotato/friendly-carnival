@@ -81,6 +81,7 @@ public class Tester extends javax.swing.JFrame {
         //the.add(new RemoteArgs("&&", false));
         //the.add(new RemoteArgs("exit",false));
         System.out.println(me.sendMessage(the));
+        the.clear();
     }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
