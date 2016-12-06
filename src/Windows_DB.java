@@ -1,7 +1,9 @@
 
+
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
 
@@ -17,31 +19,10 @@ import java.util.Scanner;
  */
 
 public class Windows_DB {
-    //recieve list of vulnerabilites from Scoring Bot
-    List <String> VulList = new ArrayList();
     
-    importVul("Vulnerabilites.csv");
     
-    private void importVul(String fileName) {
-        Scanner data = null;
-        
-        try {
-           data = new Scanner(new File(fileName)); 
-        }
-        catch (FileNotFoundException ex){
-            return;
-        }
-        
-        // Read through each line and capture the data
-        while (data.hasNextLine()){
-            String line = data.nextLine();
-            Scanner i = new Scanner(line);
-            i.useDelimiter(",");
-            
-            //Read in each value on the line and create a team
-            String name = i.next();
-            VulList.add(name);
-        }
+    public Windows_DB(String fileName, ArrayList arrayName){
+        importVulnerabilities imp = new importVulnerabilities();
+        imp.importVul(fileName, arrayName);
     }
-    System.out.println(VulList);
 }
