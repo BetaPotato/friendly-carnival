@@ -93,5 +93,8 @@ public class ScoringBot implements Runnable
             } catch (Exception ex) {}
         }
     }
+    //Ryan please add in something to pass vulnerabilities in an Array List into "Windows_DB.java"
+    //Windows_DB will take the vulnerability and return the solution to display into the GUI
+    //Thanks, Jack
     
 }

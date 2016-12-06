@@ -15,11 +15,14 @@ import java.util.Scanner;
  *
  * @author lee_866317
  */
+
 public class Windows_DB {
     //recieve list of vulnerabilites from Scoring Bot
     List <String> VulList = new ArrayList();
     
-    public void importData(String fileName) {
+    importVul("Vulnerabilites.csv");
+    
+    private void importVul(String fileName) {
         Scanner data = null;
         
         try {
@@ -37,7 +40,8 @@ public class Windows_DB {
             
             //Read in each value on the line and create a team
             String name = i.next();
+            VulList.add(name);
         }
-        importData("Vulnerabilites.csv");
     }
+    System.out.println(VulList);
 }
