@@ -1,7 +1,8 @@
-Firewall
-Stop Remote
-Start Remote
-Firewall Services
-Don't Allow Remote
-Allow Remote
-Auto-Updating 
+OS,Description,Check Command,Expected Output,Solve Command
+W,Firewall,,,
+W,Stop Remote,,,
+W,Start Remote,,,
+W,Firewall Services,,,
+W,Don't Allow Remote,,,
+W,Allow Remote,,,
+W,Auto-Updating ,,,

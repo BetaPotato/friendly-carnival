@@ -113,7 +113,6 @@ public class Tester extends javax.swing.JFrame {
         Windows_DB names = new Windows_DB("vulnerabilities.csv", vulNames);
         
         ArrayList vulCommands = new ArrayList<>();
-        Windows_DB scanCommand = new Windows_DB("")
         
         
         //System.out.println(vulNames);
