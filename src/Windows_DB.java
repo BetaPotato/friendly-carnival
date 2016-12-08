@@ -22,8 +22,9 @@ public class Windows_DB {
     
     
     public Windows_DB(String fileName, ArrayList arrayName){
-        importVulnerabilities imp = new importVulnerabilities();
-        imp.importVul(fileName, arrayName);
+        importVulnerabilities sweetBabyJesus = new importVulnerabilities();
+        sweetBabyJesus.importVul(fileName, arrayName);
+        
         
     }
 }

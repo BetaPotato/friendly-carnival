@@ -109,10 +109,14 @@ public class Tester extends javax.swing.JFrame {
     }//GEN-LAST:event_jTextField1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        ArrayList vulList = new ArrayList<>();
-        Windows_DB initial = new Windows_DB("vulnerabilities.csv", vulList);
+        ArrayList vulNames = new ArrayList<>();
+        Windows_DB names = new Windows_DB("vulnerabilities.csv", vulNames);
         
-        System.out.println(vulList);
+        ArrayList vulCommands = new ArrayList<>();
+        Windows_DB scanCommand = new Windows_DB("")
+        
+        
+        //System.out.println(vulNames);
         //Windows_DB onOff = new Windows_DB("onoff.csv")
         //create a excel file with boolean values returned by the scan
     }//GEN-LAST:event_jButton2ActionPerformed

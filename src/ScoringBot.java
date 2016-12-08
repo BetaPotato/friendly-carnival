@@ -26,8 +26,8 @@ public class ScoringBot implements Runnable
     private final int totalPoints;
     private int currentPoints;
 
-    private final List<Vulnerabilities> vulns;
-    private List<Vulnerabilities> solvedVulns = new ArrayList<Vulnerabilities>();
+    private final List<Vulnerability> vulns;
+    private List<Vulnerability> solvedVulns = new ArrayList<Vulnerability>();
     
     private final ComputerConnection connect;
     private final File savefile;
@@ -37,7 +37,7 @@ public class ScoringBot implements Runnable
     private final ArrayList<RemoteArgs> executeSoundLinux;
     private final ArrayList<RemoteArgs> executeSoundWindows;
 
-    public ScoringBot(ArrayList<Vulnerabilities> vulns, boolean whichOS)
+    public ScoringBot(ArrayList<Vulnerability> vulns, boolean whichOS)
     {
         this.vulns = vulns;
         this.whichOS = whichOS;
@@ -76,7 +76,7 @@ public class ScoringBot implements Runnable
             try {
                 FileInputStream fis = new FileInputStream(savefile);
                 try (ObjectInputStream ois = new ObjectInputStream(fis)) {
-                    solvedVulns = (ArrayList<Vulnerabilities>) ois.readObject();
+                    solvedVulns = (ArrayList<Vulnerability>) ois.readObject();
                 }
             } catch (Exception ex) {}
             
