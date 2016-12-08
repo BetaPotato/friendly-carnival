@@ -112,8 +112,6 @@ public class Tester extends javax.swing.JFrame {
         ArrayList vulNames = new ArrayList<>();
         Windows_DB names = new Windows_DB("vulnerabilities.csv", vulNames);
         
-        ArrayList vulCommands = new ArrayList<>();
-        
         
         //System.out.println(vulNames);
         //Windows_DB onOff = new Windows_DB("onoff.csv")

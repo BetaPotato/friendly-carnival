@@ -1,12 +1,8 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 
 /**
  *
  * @author lee_866317
+ * This program is a class that stores the TreeMap ID, Vulnerability Name, and CMD Text
  */
 public class scanCommands {
     private int id;
