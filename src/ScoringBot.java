@@ -53,8 +53,11 @@ public class ScoringBot implements Runnable
         totalPoints = totals;
         
         //These need to be changed so they actually are able to be executed
+        //CHANGE
         executeSoundLinux = new ArrayList<RemoteArgs>();
+        executeSoundLinux.add(new RemoteArgs("", false));
         executeSoundWindows = new ArrayList<RemoteArgs>();
+        executeSoundLinux.add(new RemoteArgs("start", false));
     }
     
     protected synchronized void changeRunning(boolean changeto)
@@ -67,10 +70,27 @@ public class ScoringBot implements Runnable
         return continueRunning;
     }
     
+    private void executeSound (String soundPath)
+    {
+        if (whichOS)    //if Linux, true. If windows, false
+        {
+            executeSoundLinux.add(new RemoteArgs(soundPath, false));
+            connect.sendMessage(executeSoundLinux);
+            executeSoundLinux.remove(executeSoundLinux.size()-1);
+        }
+        else
+        {
+            executeSoundWindows.add(new RemoteArgs(soundPath, false));
+            connect.sendMessage(executeSoundWindows);
+            executeSoundWindows.remove(executeSoundWindows.size()-1);
+        }
+    }
+    
     //@Override
     public void run()
     {
         //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+       //This goes and tries to read anything that is stored from a previous round in the file
         while (canRun())
         {
             try {
@@ -80,7 +100,14 @@ public class ScoringBot implements Runnable
                 }
             } catch (Exception ex) {}
             
-            
+            for (int i = 0; i < vulns.size(); i++)  //for every problem, look and try and solve it
+            {
+                try
+                {
+                    String output = connect.sendMessage(vulns.get(i).toFindVuln());
+                }
+                catch (Exception e){e.printStackTrace();}
+            }
             
             //clears out the information in the save file and add in all of the vulnerabilitites
             try
@@ -93,8 +120,4 @@ public class ScoringBot implements Runnable
             } catch (Exception ex) {}
         }
     }
-    //Ryan please add in something to pass vulnerabilities in an Array List into "Windows_DB.java"
-    //Windows_DB will take the vulnerability and return the solution to display into the GUI
-    //Thanks, Jack
-    
 }
