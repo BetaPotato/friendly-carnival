@@ -12,7 +12,8 @@
 public class Vulnerabilities
 {
     private final String[] certifiedComputers;    //This holds all of the computers the vuln. can work on
-    private final String findCommand;             //This is the command that can see if the vuln is solved or not
+    private String findCommand;             //This is the command that can see if the vuln is solved or not
+    private String compareToFindCommand;    //This is the string that is compared to the output of findCommand to see if solved or not
     private final String createCommand;           //This is the command to create this vuln if necessary
     private final boolean whichOS;                //This has 2 forms, false for Windows and true for Linux
     public static final boolean LINUX = true;     //an answer for whichOS
@@ -22,13 +23,14 @@ public class Vulnerabilities
     public static final String WINDOWS7 = "WINDOWS7";
     private final int worthPoints;
     
-    public Vulnerabilities(boolean whichOS, String[] certifiedComputers, String findCommand, String createCommand, int worthPoints)
+    public Vulnerabilities(boolean whichOS, String[] certifiedComputers, String findCommand, String createCommand, int worthPoints, String compareToFindCommand)
     {
         this.certifiedComputers = certifiedComputers;
         this.findCommand = findCommand;
         this.whichOS = whichOS;
         this.createCommand = createCommand;
         this.worthPoints = worthPoints;
+        this.compareToFindCommand = compareToFindCommand;
     }
     
     /**
