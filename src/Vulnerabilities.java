@@ -9,6 +9,7 @@
  * output compares to, which computers the vuln works on.
  * @author Ryan
  */
+//test
 public class Vulnerabilities
 {
     private final String[] certifiedComputers;    //This holds all of the computers the vuln. can work on
