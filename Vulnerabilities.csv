@@ -1,8 +1,7 @@
-OS,Description,Check Command,Expected Output,Solve Command
-W,Firewall,,,
-W,Stop Remote,,,
-W,Start Remote,,,
-W,Firewall Services,,,
-W,Don't Allow Remote,,,
-W,Allow Remote,,,
-W,Auto-Updating ,,,
+Firewall,Netsh Advfirewall show allprofiles | findstr State,State                                 ONState                                 ONState                                 ON,netsh Advfirewall set allprofiles state on,netsh Advfirewall set allprofiles state off
+Stop Remote,sc query TermService | findstr STATE,STATE              : 4  RUNNING ,net stop TermService,net start TermService
+Start Remote,,,net start TermService,net stop TermService
+Firewall Services,,,,
+Don't Allow Remote,,,,
+Allow Remote,,,,
+Auto-Updating ,,,,
