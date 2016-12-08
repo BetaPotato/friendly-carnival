@@ -9,17 +9,21 @@
  * @author lee_866317
  */
 public class scanCommands {
+    private int id;
     private String name;
     private String findCommand;
+
     
-    public scanCommands(String name, String command)
+    public scanCommands(int id, String name, String command)
     {
+        this.id = id;
         this.name = name;
         this.findCommand = name;
     }
     
     public scanCommands()
     {
+        id = 0;
         name = "";
         findCommand = "";
     }
@@ -30,5 +34,9 @@ public class scanCommands {
 
     public String getCommand(){
         return name;
+    }
+    
+    public int getID(){
+        return id;
     }
 }
