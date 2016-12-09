@@ -11,7 +11,7 @@
           <SubComponents>
             <MenuItem class="javax.swing.JMenuItem" name="jMenuItem2">
               <Properties>
-                <Property name="text" type="java.lang.String" value="Get a Hint"/>
+                <Property name="text" type="java.lang.String" value="TODO"/>
               </Properties>
             </MenuItem>
           </SubComponents>
@@ -58,7 +58,7 @@
 
       <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
       <SubComponents>
-        <Component class="javax.swing.JTable" name="vulnerabilities_jTable">
+        <Component class="javax.swing.JTable" name="points_jTable">
           <Properties>
             <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
               <Table columnCount="2" rowCount="0">
@@ -88,7 +88,7 @@
         </Component>
       </SubComponents>
     </Container>
-    <Component class="javax.swing.JLabel" name="currentStatus_jLabel">
+    <Component class="javax.swing.JLabel" name="pointsNumberDisplay_jLabel">
       <Properties>
         <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
           <Font name="Dialog" size="36" style="1"/>
@@ -117,7 +117,7 @@
 
       <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
       <SubComponents>
-        <Component class="javax.swing.JTable" name="vulnerabilities_jTable1">
+        <Component class="javax.swing.JTable" name="penalties_jTable">
           <Properties>
             <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
               <Table columnCount="2" rowCount="0">
@@ -146,7 +146,7 @@
         </Component>
       </SubComponents>
     </Container>
-    <Component class="javax.swing.JLabel" name="jLabel1">
+    <Component class="javax.swing.JLabel" name="penaltiesTableLabel">
       <Properties>
         <Property name="text" type="java.lang.String" value="Penalties"/>
       </Properties>
@@ -156,7 +156,7 @@
         </Constraint>
       </Constraints>
     </Component>
-    <Component class="javax.swing.JLabel" name="jLabel2">
+    <Component class="javax.swing.JLabel" name="pointsTableLabel">
       <Properties>
         <Property name="text" type="java.lang.String" value="Points"/>
       </Properties>
@@ -166,7 +166,7 @@
         </Constraint>
       </Constraints>
     </Component>
-    <Component class="javax.swing.JLabel" name="jLabel3">
+    <Component class="javax.swing.JLabel" name="points_jLabel">
       <Properties>
         <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
           <Color blue="0" green="cc" red="0" type="rgb"/>
@@ -179,7 +179,7 @@
         </Constraint>
       </Constraints>
     </Component>
-    <Component class="javax.swing.JLabel" name="jLabel4">
+    <Component class="javax.swing.JLabel" name="penalties_jLabel">
       <Properties>
         <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
           <Color blue="0" green="0" red="cc" type="rgb"/>
@@ -267,7 +267,7 @@
         </Constraint>
       </Constraints>
     </Component>
-    <Component class="javax.swing.JLabel" name="currentStatus_jLabel1">
+    <Component class="javax.swing.JLabel" name="vulnerabilityNumberDisplay_jLabel">
       <Properties>
         <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
           <Font name="Dialog" size="36" style="1"/>
@@ -543,11 +543,11 @@
         <CodeMethod name="add" class="java.awt.Container" parameterTypes="java.awt.Component, java.lang.Object"/>
       </StatementProvider>
       <Parameters>
-        <CodeExpression id="20_currentStatus_jLabel">
-          <CodeVariable name="currentStatus_jLabel" type="8194" declaredType="javax.swing.JLabel"/>
+        <CodeExpression id="20_pointsNumberDisplay_jLabel">
+          <CodeVariable name="pointsNumberDisplay_jLabel" type="8194" declaredType="javax.swing.JLabel"/>
           <ExpressionOrigin>
             <ExpressionProvider type="ComponentRef">
-              <ComponentRef name="currentStatus_jLabel"/>
+              <ComponentRef name="pointsNumberDisplay_jLabel"/>
             </ExpressionProvider>
           </ExpressionOrigin>
         </CodeExpression>
@@ -759,11 +759,11 @@
         <CodeMethod name="add" class="java.awt.Container" parameterTypes="java.awt.Component, java.lang.Object"/>
       </StatementProvider>
       <Parameters>
-        <CodeExpression id="36_jLabel1">
-          <CodeVariable name="jLabel1" type="8194" declaredType="javax.swing.JLabel"/>
+        <CodeExpression id="36_penaltiesTableLabel">
+          <CodeVariable name="penaltiesTableLabel" type="8194" declaredType="javax.swing.JLabel"/>
           <ExpressionOrigin>
             <ExpressionProvider type="ComponentRef">
-              <ComponentRef name="jLabel1"/>
+              <ComponentRef name="penaltiesTableLabel"/>
             </ExpressionProvider>
           </ExpressionOrigin>
         </CodeExpression>
@@ -841,11 +841,11 @@
         <CodeMethod name="add" class="java.awt.Container" parameterTypes="java.awt.Component, java.lang.Object"/>
       </StatementProvider>
       <Parameters>
-        <CodeExpression id="42_jLabel2">
-          <CodeVariable name="jLabel2" type="8194" declaredType="javax.swing.JLabel"/>
+        <CodeExpression id="42_pointsTableLabel">
+          <CodeVariable name="pointsTableLabel" type="8194" declaredType="javax.swing.JLabel"/>
           <ExpressionOrigin>
             <ExpressionProvider type="ComponentRef">
-              <ComponentRef name="jLabel2"/>
+              <ComponentRef name="pointsTableLabel"/>
             </ExpressionProvider>
           </ExpressionOrigin>
         </CodeExpression>
@@ -910,11 +910,11 @@
         <CodeMethod name="add" class="java.awt.Container" parameterTypes="java.awt.Component, java.lang.Object"/>
       </StatementProvider>
       <Parameters>
-        <CodeExpression id="47_jLabel3">
-          <CodeVariable name="jLabel3" type="8194" declaredType="javax.swing.JLabel"/>
+        <CodeExpression id="47_points_jLabel">
+          <CodeVariable name="points_jLabel" type="8194" declaredType="javax.swing.JLabel"/>
           <ExpressionOrigin>
             <ExpressionProvider type="ComponentRef">
-              <ComponentRef name="jLabel3"/>
+              <ComponentRef name="points_jLabel"/>
             </ExpressionProvider>
           </ExpressionOrigin>
         </CodeExpression>
@@ -979,11 +979,11 @@
         <CodeMethod name="add" class="java.awt.Container" parameterTypes="java.awt.Component, java.lang.Object"/>
       </StatementProvider>
       <Parameters>
-        <CodeExpression id="52_jLabel4">
-          <CodeVariable name="jLabel4" type="8194" declaredType="javax.swing.JLabel"/>
+        <CodeExpression id="52_penalties_jLabel">
+          <CodeVariable name="penalties_jLabel" type="8194" declaredType="javax.swing.JLabel"/>
           <ExpressionOrigin>
             <ExpressionProvider type="ComponentRef">
-              <ComponentRef name="jLabel4"/>
+              <ComponentRef name="penalties_jLabel"/>
             </ExpressionProvider>
           </ExpressionOrigin>
         </CodeExpression>
@@ -1471,11 +1471,11 @@
         <CodeMethod name="add" class="java.awt.Container" parameterTypes="java.awt.Component, java.lang.Object"/>
       </StatementProvider>
       <Parameters>
-        <CodeExpression id="88_currentStatus_jLabel1">
-          <CodeVariable name="currentStatus_jLabel1" type="8194" declaredType="javax.swing.JLabel"/>
+        <CodeExpression id="88_vulnerabilityNumberDisplay_jLabel">
+          <CodeVariable name="vulnerabilityNumberDisplay_jLabel" type="8194" declaredType="javax.swing.JLabel"/>
           <ExpressionOrigin>
             <ExpressionProvider type="ComponentRef">
-              <ComponentRef name="currentStatus_jLabel1"/>
+              <ComponentRef name="vulnerabilityNumberDisplay_jLabel"/>
             </ExpressionProvider>
           </ExpressionOrigin>
         </CodeExpression>

@@ -1,3 +1,5 @@
+import java.util.ArrayList;
+
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -9,12 +11,20 @@
  * @author nikhil4patil
  */
 public class ScoringBotWindow extends javax.swing.JFrame {
-
+    public String[] vulnsSolved;
+    
     /**
      * Creates new form mainFrame
      */
+    
     public ScoringBotWindow() {
         initComponents();
+        
+    }
+    
+    public ScoringBotWindow(ArrayList<Vulnerability> vulns/*, ArrayList<Penalties> pels*/) { //TODO
+        initComponents();
+        //TODO Stuff
     }
 
     /**
@@ -28,20 +38,20 @@ public class ScoringBotWindow extends javax.swing.JFrame {
         java.awt.GridBagConstraints gridBagConstraints;
 
         vulnerabilities_jScrollPane = new javax.swing.JScrollPane();
-        vulnerabilities_jTable = new javax.swing.JTable();
-        currentStatus_jLabel = new javax.swing.JLabel();
+        points_jTable = new javax.swing.JTable();
+        pointsNumberDisplay_jLabel = new javax.swing.JLabel();
         vulnerabilities_jScrollPane1 = new javax.swing.JScrollPane();
-        vulnerabilities_jTable1 = new javax.swing.JTable();
-        jLabel1 = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
-        jLabel3 = new javax.swing.JLabel();
-        jLabel4 = new javax.swing.JLabel();
+        penalties_jTable = new javax.swing.JTable();
+        penaltiesTableLabel = new javax.swing.JLabel();
+        pointsTableLabel = new javax.swing.JLabel();
+        points_jLabel = new javax.swing.JLabel();
+        penalties_jLabel = new javax.swing.JLabel();
         filler1 = new javax.swing.Box.Filler(new java.awt.Dimension(0, 0), new java.awt.Dimension(0, 0), new java.awt.Dimension(0, 32767));
         filler3 = new javax.swing.Box.Filler(new java.awt.Dimension(0, 0), new java.awt.Dimension(0, 0), new java.awt.Dimension(32767, 0));
         filler2 = new javax.swing.Box.Filler(new java.awt.Dimension(0, 0), new java.awt.Dimension(0, 0), new java.awt.Dimension(32767, 0));
         filler4 = new javax.swing.Box.Filler(new java.awt.Dimension(0, 0), new java.awt.Dimension(0, 0), new java.awt.Dimension(0, 32767));
         filler5 = new javax.swing.Box.Filler(new java.awt.Dimension(0, 0), new java.awt.Dimension(0, 0), new java.awt.Dimension(0, 32767));
-        currentStatus_jLabel1 = new javax.swing.JLabel();
+        vulnerabilityNumberDisplay_jLabel = new javax.swing.JLabel();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         jMenuItem2 = new javax.swing.JMenuItem();
@@ -54,7 +64,7 @@ public class ScoringBotWindow extends javax.swing.JFrame {
         layout.rowHeights = new int[] {0, 5, 0, 5, 0, 5, 0, 5, 0, 5, 0, 5, 0, 5, 0, 5, 0, 5, 0};
         getContentPane().setLayout(layout);
 
-        vulnerabilities_jTable.setModel(new javax.swing.table.DefaultTableModel(
+        points_jTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
@@ -70,9 +80,9 @@ public class ScoringBotWindow extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
-        vulnerabilities_jTable.setColumnSelectionAllowed(true);
-        vulnerabilities_jScrollPane.setViewportView(vulnerabilities_jTable);
-        vulnerabilities_jTable.getColumnModel().getSelectionModel().setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
+        points_jTable.setColumnSelectionAllowed(true);
+        vulnerabilities_jScrollPane.setViewportView(points_jTable);
+        points_jTable.getColumnModel().getSelectionModel().setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
 
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 2;
@@ -85,17 +95,17 @@ public class ScoringBotWindow extends javax.swing.JFrame {
         gridBagConstraints.weighty = 1.0;
         getContentPane().add(vulnerabilities_jScrollPane, gridBagConstraints);
 
-        currentStatus_jLabel.setFont(new java.awt.Font("Dialog", 1, 36)); // NOI18N
-        currentStatus_jLabel.setForeground(new java.awt.Color(0, 204, 0));
-        currentStatus_jLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        currentStatus_jLabel.setText("0 / 0 Points");
+        pointsNumberDisplay_jLabel.setFont(new java.awt.Font("Dialog", 1, 36)); // NOI18N
+        pointsNumberDisplay_jLabel.setForeground(new java.awt.Color(0, 204, 0));
+        pointsNumberDisplay_jLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        pointsNumberDisplay_jLabel.setText("0 / 0 Points");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 2;
         gridBagConstraints.gridy = 2;
         gridBagConstraints.gridwidth = 3;
-        getContentPane().add(currentStatus_jLabel, gridBagConstraints);
+        getContentPane().add(pointsNumberDisplay_jLabel, gridBagConstraints);
 
-        vulnerabilities_jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        penalties_jTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
@@ -111,8 +121,8 @@ public class ScoringBotWindow extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
-        vulnerabilities_jScrollPane1.setViewportView(vulnerabilities_jTable1);
-        vulnerabilities_jTable1.getColumnModel().getSelectionModel().setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
+        vulnerabilities_jScrollPane1.setViewportView(penalties_jTable);
+        penalties_jTable.getColumnModel().getSelectionModel().setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
 
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 2;
@@ -125,37 +135,37 @@ public class ScoringBotWindow extends javax.swing.JFrame {
         gridBagConstraints.weighty = 1.0;
         getContentPane().add(vulnerabilities_jScrollPane1, gridBagConstraints);
 
-        jLabel1.setText("Penalties");
+        penaltiesTableLabel.setText("Penalties");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 2;
         gridBagConstraints.gridy = 12;
         gridBagConstraints.gridwidth = 3;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        getContentPane().add(jLabel1, gridBagConstraints);
+        getContentPane().add(penaltiesTableLabel, gridBagConstraints);
 
-        jLabel2.setText("Points");
+        pointsTableLabel.setText("Points");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 2;
         gridBagConstraints.gridy = 4;
         gridBagConstraints.gridwidth = 3;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        getContentPane().add(jLabel2, gridBagConstraints);
+        getContentPane().add(pointsTableLabel, gridBagConstraints);
 
-        jLabel3.setForeground(new java.awt.Color(0, 204, 0));
-        jLabel3.setText("+0");
+        points_jLabel.setForeground(new java.awt.Color(0, 204, 0));
+        points_jLabel.setText("+0");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 2;
         gridBagConstraints.gridy = 8;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        getContentPane().add(jLabel3, gridBagConstraints);
+        getContentPane().add(points_jLabel, gridBagConstraints);
 
-        jLabel4.setForeground(new java.awt.Color(204, 0, 0));
-        jLabel4.setText("- 0");
+        penalties_jLabel.setForeground(new java.awt.Color(204, 0, 0));
+        penalties_jLabel.setText("- 0");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 2;
         gridBagConstraints.gridy = 16;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        getContentPane().add(jLabel4, gridBagConstraints);
+        getContentPane().add(penalties_jLabel, gridBagConstraints);
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 2;
         gridBagConstraints.gridy = 18;
@@ -187,20 +197,20 @@ public class ScoringBotWindow extends javax.swing.JFrame {
         gridBagConstraints.weighty = 0.1;
         getContentPane().add(filler5, gridBagConstraints);
 
-        currentStatus_jLabel1.setFont(new java.awt.Font("Dialog", 1, 36)); // NOI18N
-        currentStatus_jLabel1.setForeground(new java.awt.Color(0, 204, 0));
-        currentStatus_jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        currentStatus_jLabel1.setText("0 / 0 Vulnerabilities");
+        vulnerabilityNumberDisplay_jLabel.setFont(new java.awt.Font("Dialog", 1, 36)); // NOI18N
+        vulnerabilityNumberDisplay_jLabel.setForeground(new java.awt.Color(0, 204, 0));
+        vulnerabilityNumberDisplay_jLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        vulnerabilityNumberDisplay_jLabel.setText("0 / 0 Vulnerabilities");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 2;
         gridBagConstraints.gridy = 0;
         gridBagConstraints.gridwidth = 3;
         gridBagConstraints.weightx = 1.0;
-        getContentPane().add(currentStatus_jLabel1, gridBagConstraints);
+        getContentPane().add(vulnerabilityNumberDisplay_jLabel, gridBagConstraints);
 
         jMenu1.setText("Help");
 
-        jMenuItem2.setText("Get a Hint");
+        jMenuItem2.setText("TODO");
         jMenu1.add(jMenuItem2);
 
         jMenuBar1.add(jMenu1);
@@ -252,23 +262,23 @@ public class ScoringBotWindow extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JLabel currentStatus_jLabel;
-    private javax.swing.JLabel currentStatus_jLabel1;
     private javax.swing.Box.Filler filler1;
     private javax.swing.Box.Filler filler2;
     private javax.swing.Box.Filler filler3;
     private javax.swing.Box.Filler filler4;
     private javax.swing.Box.Filler filler5;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuItem jMenuItem2;
+    private javax.swing.JLabel penaltiesTableLabel;
+    private javax.swing.JLabel penalties_jLabel;
+    private javax.swing.JTable penalties_jTable;
+    private javax.swing.JLabel pointsNumberDisplay_jLabel;
+    private javax.swing.JLabel pointsTableLabel;
+    private javax.swing.JLabel points_jLabel;
+    private javax.swing.JTable points_jTable;
     private javax.swing.JScrollPane vulnerabilities_jScrollPane;
     private javax.swing.JScrollPane vulnerabilities_jScrollPane1;
-    private javax.swing.JTable vulnerabilities_jTable;
-    private javax.swing.JTable vulnerabilities_jTable1;
+    private javax.swing.JLabel vulnerabilityNumberDisplay_jLabel;
     // End of variables declaration//GEN-END:variables
 }

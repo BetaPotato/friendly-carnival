@@ -104,7 +104,17 @@ public class ScoringBot implements Runnable
             {
                 try
                 {
-                    String output = connect.sendMessage(vulns.get(i).toFindVuln());
+                    String alloutput = connect.sendMessage(vulns.get(i).toFindVuln());
+                    String[] info = alloutput.split(":");
+                    
+                    for (int a = 0; a < info.length; a++)
+                    {
+                        if (info[a].equals(vulns.get(i).toCompare()))
+                        {
+                            //have it do good things
+                        }
+                    }
+                    
                 }
                 catch (Exception e){e.printStackTrace();}
             }
