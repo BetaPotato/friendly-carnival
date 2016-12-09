@@ -18,11 +18,11 @@ import java.util.Scanner;
  * @author lee_866317
  */
 
-public class Windows_DB {
+public class WindowsDB {
     
     
-    public Windows_DB(String fileName, ArrayList arrayName){
-        importVulnerabilities sweetBabyJesus = new importVulnerabilities();
+    public WindowsDB(String fileName, ArrayList arrayName){
+        ImportFile sweetBabyJesus = new ImportFile();
         sweetBabyJesus.importVul(fileName, arrayName);
         
         

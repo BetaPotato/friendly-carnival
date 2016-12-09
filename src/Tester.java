@@ -110,7 +110,7 @@ public class Tester extends javax.swing.JFrame {
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         ArrayList vulNames = new ArrayList<>();
-        Windows_DB names = new Windows_DB("vulnerabilities.csv", vulNames);
+        WindowsDB names = new WindowsDB("vulnerabilities.csv", vulNames);
         
         
         //System.out.println(vulNames);
