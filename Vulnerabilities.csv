@@ -1,8 +1,8 @@
-OS,Description,Check Command,Expected Output,Solve Command
-W,Firewall,,,
-W,Stop Remote,,,
-W,Start Remote,,,
-W,Firewall Services,,,
-W,Don't Allow Remote,,,
-W,Allow Remote,,,
-W,Auto-Updating ,,,
+1,Firewall,Netsh Advfirewall show allprofiles
+2,Stop Remote,"sc config ""TermService"" start= off"
+3,Start Remote,"sc config ""TermService"" start= auto"
+4,Firewall Services,placeholder
+5,Don't Allow Remote,placeholder
+6,Allow Remote,placeholder
+7,Auto-Updating ,placeholder
+8,Net Accounts,net accounts

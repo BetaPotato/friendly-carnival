@@ -16,7 +16,7 @@ import java.util.TreeMap;
  */
 public class ImportFile {
     private VulMap vulMap;
-    public void importVul(String fileName, ArrayList arrayName) {
+    public void importVul(String fileName) {
         Scanner data = null;
         
         try {
