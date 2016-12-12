@@ -100,19 +100,34 @@ public class ScoringBot implements Runnable
                 }
             } catch (Exception ex) {}
             
+            boolean worked=false;   //stored if either the output, error, or status effect was met for that iteration
             for (int i = 0; i < vulns.size(); i++)  //for every problem, look and try and solve it
             {
+                worked=false;
                 try
                 {
                     String alloutput = connect.sendMessage(vulns.get(i).toFindVuln());
                     String[] info = alloutput.split(":");
                     
+                    Test1:
                     for (int a = 0; a < info.length; a++)
                     {
-                        if (info[a].equals(vulns.get(i).toCompare()))
+                        if (info[a].equals(vulns.get(i).toCompare()))   //If the output is what was expected
                         {
                             //have it do good things
+                            if (!solvedVulns.contains(vulns.get(i)))     //If the solvedVulns doesn't already have 
+                            {
+                                executeSound(pathGoodSound);
+                                solvedVulns.add(vulns.get(i));
+                            }
+                            worked=true;
+                            break Test1;
                         }
+                    }
+                    if (!worked && solvedVulns.contains(vulns.get(i)))  //If the command doesn't have the correct 
+                    {
+                        executeSound(pathBadSound);
+                        solvedVulns.remove(vulns.get(i));
                     }
                     
                 }
