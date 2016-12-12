@@ -39,7 +39,7 @@ public class ImportFile {
             
             ScanCommand test = new ScanCommand(id, name, commandFind);
             
-            //vulMap.getScans().put(id, test);
+            vulMap.getScans().put(id, test);
         }
     }
 }
