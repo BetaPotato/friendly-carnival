@@ -124,7 +124,7 @@ public class ScoringBot implements Runnable
                             break Test1;
                         }
                     }
-                    if (!worked && solvedVulns.contains(vulns.get(i)))  //If the command doesn't have the correct 
+                    if (!worked && solvedVulns.contains(vulns.get(i)))  //If the command doesn't have the correct output but was solved before, ding them
                     {
                         executeSound(pathBadSound);
                         solvedVulns.remove(vulns.get(i));
