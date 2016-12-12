@@ -106,14 +106,14 @@ public class Tester extends javax.swing.JFrame {
 
     private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
         // TODO add your handling code here:
+        
     }//GEN-LAST:event_jTextField1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        ArrayList vulNames = new ArrayList<>();
-        Windows_DB names = new Windows_DB("vulnerabilities.csv", vulNames);
-        
-        ArrayList vulCommands = new ArrayList<>();
-        
+        ImportFile scan = new ImportFile();
+        VulMap tester = new VulMap();
+        scan.importVul("vulnerabilities.csv");
+        //System.out.println(tester.getScans());
         
         //System.out.println(vulNames);
         //Windows_DB onOff = new Windows_DB("onoff.csv")

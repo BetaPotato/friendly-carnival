@@ -1,7 +1,8 @@
-Firewall,Netsh Advfirewall show allprofiles | findstr State,State                                 ONState                                 ONState                                 ON,netsh Advfirewall set allprofiles state on,netsh Advfirewall set allprofiles state off
-Stop Remote,sc query TermService | findstr STATE,STATE              : 4  RUNNING ,net stop TermService,net start TermService
-Start Remote,,,net start TermService,net stop TermService
-Firewall Services,,,,
-Don't Allow Remote,,,,
-Allow Remote,,,,
-Auto-Updating ,,,,
+1,Firewall,Netsh Advfirewall show allprofiles
+2,Stop Remote,"sc config ""TermService"" start= off"
+3,Start Remote,"sc config ""TermService"" start= auto"
+4,Firewall Services,placeholder
+5,Don't Allow Remote,placeholder
+6,Allow Remote,placeholder
+7,Auto-Updating ,placeholder
+8,Net Accounts,net accounts
