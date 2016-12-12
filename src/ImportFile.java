@@ -15,7 +15,7 @@ import java.util.TreeMap;
  * @author lee_866317
  */
 public class ImportFile {
-    public VulMap vulMap;
+    public VulnerabilityMap vulMap = new VulnerabilityMap();
     public void importVul(String fileName) {
         Scanner data = null;
         
@@ -37,9 +37,9 @@ public class ImportFile {
             String name = i.next();
             String commandFind = i.next();
             
-            ScanCommand scanCommands = new ScanCommand(id, name, commandFind);
+            ScanCommand test = new ScanCommand(id, name, commandFind);
             
-            vulMap.getScans().put(id, scanCommands);
+            vulMap.getScans().put(id, test);
         }
     }
 }
