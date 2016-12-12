@@ -111,7 +111,7 @@ public class Tester extends javax.swing.JFrame {
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         ImportFile scan = new ImportFile();
-        VulMap test = new VulMap();
+        vulMap test = new vulMap();
         scan.importVul("vulnerabilities.csv");
         System.out.println(test.getScans());
         
