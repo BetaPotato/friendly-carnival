@@ -113,7 +113,7 @@ public class Tester extends javax.swing.JFrame {
         ImportFile scan = new ImportFile();
         VulMap tester = new VulMap();
         scan.importVul("vulnerabilities.csv");
-        System.out.println(tester.getScans());
+        //System.out.println(tester.getScans());
         
         //System.out.println(vulNames);
         //Windows_DB onOff = new Windows_DB("onoff.csv")
