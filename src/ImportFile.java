@@ -37,9 +37,9 @@ public class ImportFile {
             String name = i.next();
             String commandFind = i.next();
             
-            ScanCommand scanCommands = new ScanCommand(id, name, commandFind);
+            ScanCommand test = new ScanCommand(id, name, commandFind);
             
-            vulMap.getScans().put(id, scanCommands);
+            vulMap.getScans().put(id, test);
         }
     }
 }
