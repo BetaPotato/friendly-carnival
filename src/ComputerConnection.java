@@ -25,8 +25,17 @@ import java.util.concurrent.TimeUnit;
          */
         protected ArrayList<String> command = new ArrayList<String>();	//needs to be set in child class, The command that would be run, used for Key
         
+        /**
+         * This is a boolean of which Operating System the program is currently running on.
+         */
         private boolean whichOS;                //This has 2 forms, false for Windows and true for Linux
+        /**
+         * This is the variable that needs to be passed to ComputerConnection to determine which OS the program is on. This is the variable for all Linux Operating Systems.
+         */
         public static final boolean LINUX = true;     //an answer for whichOS
+        /**
+         * This is the variable that needs to be passed to ComputerConnection to determine which OS the program is on. This is the variable for all Windows Operating Systems.
+         */
         public static final boolean WINDOWS = false;  //an answer for whichOS
         
         /**
@@ -42,24 +51,36 @@ import java.util.concurrent.TimeUnit;
          */
         protected ArrayList<RemoteArgs> arguments;
         /**
-         * Stores the Exception that caused problems, the Exception that will be given to the client if isObj
+         * Stores the error of the command
          */
         private String standardError = "";	//used to hold the standard Error
+        /**
+         * Stores the output of the given command
+         */
         private String standardOut = "";		//used to hold the output
+        /**
+         * Stores the status integer that the command exited with
+         */
         private int status = 1;				//used to hold the status
 
+        /**
+         * The ProcessBuilder that will be used to create the process to execute the command on the computer.
+         */
         private ProcessBuilder pb;
         //private String username = "";
         //private String domainName = "";
         //private String password = "";
         //private String hostname = "";
+        /**
+         * The amount of time that the program will allow a command to execute before it decides to kill the process.
+         */
         private long executeTime;
 
          //@param hostname - The String of the hostname of the computer you want to connect to.
          //@param loginInformation - The information that is used in order to log into the remote computer (like password, keyPath, username).
          
        /**
-        * 
+        * This is the 
         * @param whichOS 
         */
         public ComputerConnection(boolean whichOS)//, String hostname, String loginInformation)
