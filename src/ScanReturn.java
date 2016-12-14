@@ -15,11 +15,10 @@ public class ScanReturn {
         
     }
     
-    public String returnScans(String file)
+    public String returnScans(String file, Integer num)
     {
         scan.importVul(file);
-        Integer key = scan.vulMap.scans.firstKey();
-        ScanCommand test = scan.vulMap.getScans().get(key);
+        ScanCommand test = scan.vulMap.getScans().get(num);
         String name = test.getName();
         return name;
         
