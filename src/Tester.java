@@ -1,5 +1,6 @@
-
+import java.util.TreeMap;
 import java.util.ArrayList;
+import java.util.Collection;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -19,7 +20,8 @@ public class Tester extends javax.swing.JFrame {
     public Tester() {
         initComponents();
     }
-
+    public Integer skey = 0;
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -110,11 +112,12 @@ public class Tester extends javax.swing.JFrame {
     }//GEN-LAST:event_jTextField1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        ImportFile scan = new ImportFile();
+
         
-        scan.importVul("Vulnerabilities.csv");
-        System.out.println(scan.vulMap.getScans());
         
+
+        ScanReturn test = new ScanReturn();
+        System.out.println(test.returnScans("Vulnerabilities.csv"));
         //System.out.println(vulNames);
         //Windows_DB onOff = new Windows_DB("onoff.csv")
         //create a excel file with boolean values returned by the scan
@@ -154,7 +157,7 @@ public class Tester extends javax.swing.JFrame {
             }
         });
     }
-
+    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
