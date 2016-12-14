@@ -21,12 +21,12 @@ import java.util.concurrent.TimeUnit;
     {
         
         /**
-         * this is the String version of the {@link arguments}. Converted in the {@link #convertArgumentToString()} method.
+         * this is the String version of the {@link #arguments}. Converted in the {@link #convertArgumentToString()} method.
          */
         protected ArrayList<String> command = new ArrayList<String>();	//needs to be set in child class, The command that would be run, used for Key
         
         /**
-         * This is the boolean of which Operating System the program is currently on. Can only be either {@link WINDOWS} or {@link LINUX}.
+         * This is the boolean of which Operating System the program is currently on. Can only be either {@link #WINDOWS} or {@link #LINUX}.
          */
         private boolean whichOS;                //This has 2 forms, false for Windows and true for Linux
         /**
@@ -147,7 +147,7 @@ import java.util.concurrent.TimeUnit;
         /**
          * This method executes the given command on the computer, and captures the standard output, error and status and returns it.
          * @param argument The command that will be executed on the computer.
-         * @return Returns the output of the command executed on the computer, in the format of {@link standardOut}:{@link standardError}:{@link status}
+         * @return Returns the output of the command executed on the computer, in the format of {@link #standardOut}:{@link #standardError}:{@link #status}
          */
         protected String sendMessage(ArrayList<RemoteArgs> argument)
         {
@@ -161,8 +161,8 @@ import java.util.concurrent.TimeUnit;
         /**
          * This method executes the given command on the computer, and captures the standard output, error and status and returns it.
          * @param argument The command that will be executed on the computer split up into sections of surrounded in quotes and not in quotes
-         * @param whichOS his is the boolean of which Operating System the program is currently on. Can only be either {@link WINDOWS} or {@link LINUX}.
-         * @return Returns the output of the command executed on the computer, in the format of {@link standardOut}:{@link standardError}:{@link status}
+         * @param whichOS his is the boolean of which Operating System the program is currently on. Can only be either {@link #WINDOWS} or {@link #LINUX}.
+         * @return Returns the output of the command executed on the computer, in the format of {@link #standardOut}:{@link #standardError}:{@link #status}
          */
         protected String sendMessage(ArrayList<RemoteArgs> argument, boolean whichOS)
         {
