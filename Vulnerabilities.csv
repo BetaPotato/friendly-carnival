@@ -1,8 +1,8 @@
-1,Firewall,Netsh Advfirewall show allprofiles
-2,Stop Remote,"sc config ""TermService"" start= off"
-3,Start Remote,"sc config ""TermService"" start= auto"
-4,Firewall Services,placeholder
-5,Don't Allow Remote,placeholder
-6,Allow Remote,placeholder
-7,Auto-Updating ,placeholder
-8,Net Accounts,net accounts
+1,Firewall,Netsh Advfirewall show allprofiles,FALSE
+2,Stop Remote,"sc config ""TermService"" start= off",FALSE
+3,Start Remote,"sc config ""TermService"" start= auto",FALSE
+4,Firewall Services,placeholder,FALSE
+5,Don't Allow Remote,placeholder,FALSE
+6,Allow Remote,placeholder,FALSE
+7,Auto-Updating ,placeholder,FALSE
+8,Net Accounts,net accounts,FALSE

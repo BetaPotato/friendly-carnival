@@ -36,8 +36,9 @@ public class ImportFile {
             int id = i.nextInt();
             String name = i.next();
             String commandFind = i.next();
+            boolean os = i.nextBoolean();
             
-            ScanCommand test = new ScanCommand(id, name, commandFind);
+            ScanCommand test = new ScanCommand(name, commandFind, os);
             
             vulMap.getScans().put(id, test);
         }

@@ -8,20 +8,21 @@ public class ScanCommand {
     private int id;
     private String name;
     private String findCommand;
+    private boolean os;
 
     
-    public ScanCommand(int id, String name, String command)
+    public ScanCommand(String name, String command, boolean os)
     {
-        this.id = id;
         this.name = name;
         this.findCommand = name;
+        this.os = os;
     }
     
     public ScanCommand()
     {
-        id = 0;
         name = "";
         findCommand = "";
+        os = true;
     }
     
     public String getName() {
@@ -32,7 +33,7 @@ public class ScanCommand {
         return name;
     }
     
-    public int getID(){
-        return id;
+    public boolean getOS(){
+        return os;
     }
 }

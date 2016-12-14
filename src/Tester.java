@@ -114,13 +114,13 @@ public class Tester extends javax.swing.JFrame {
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
 
         
-        
-
-        ScanReturn test = new ScanReturn();
-        System.out.println(test.returnScans("Vulnerabilities.csv"));
-        //System.out.println(vulNames);
-        //Windows_DB onOff = new Windows_DB("onoff.csv")
-        //create a excel file with boolean values returned by the scan
+        int number = 1;
+        while(number < 5)
+        {
+            ScanReturn test = new ScanReturn();
+            System.out.println(test.returnScans("Vulnerabilities.csv", number));
+            number++;
+        }
     }//GEN-LAST:event_jButton2ActionPerformed
 
     /**
