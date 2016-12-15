@@ -10,7 +10,7 @@ import java.util.ArrayList;
  *
  * @author nikhil4patil
  */
-public class ScoringBotWindow extends javax.swing.JFrame {
+public class ScoringBotWindow extends javax.swing.JFrame implements Window {
     public String[] vulnsSolved;
     
     /**

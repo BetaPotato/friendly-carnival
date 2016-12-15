@@ -15,7 +15,7 @@ import javax.swing.table.TableCellRenderer;
  *
  * @author wesley
  */
-public class SetupWindow extends javax.swing.JFrame {
+public class SetupWindow extends javax.swing.JFrame implements Window {
     
     /**
      * Creates new form SetupWindow

@@ -14,7 +14,7 @@ import java.util.List;
  */
 
 /**
- *This is the ScoringBot Object, and will do things like decide what vuln to add if there aren't enough, live scoring of computer, and make the good sound when accomplished. 
+ *This is the ScoringBot Object, and will do live scoring of computer and make the good sound when accomplished and bad when backtracking. 
  * @author Ryan
  */
 public class ScoringBot implements Runnable
@@ -37,6 +37,11 @@ public class ScoringBot implements Runnable
     private final ArrayList<RemoteArgs> executeSoundLinux;
     private final ArrayList<RemoteArgs> executeSoundWindows;
 
+    /**
+     * 
+     * @param vulns
+     * @param whichOS 
+     */
     public ScoringBot(ArrayList<Vulnerability> vulns, boolean whichOS)
     {
         this.vulns = vulns;
@@ -60,16 +65,28 @@ public class ScoringBot implements Runnable
         executeSoundLinux.add(new RemoteArgs("start", false));
     }
     
+    /**
+     * A synchronized method that is used to set if the ScoringBot is allowed to continue to run.
+     * @param changeto the boolean to set either the ScoringBot to be allowed to run or not.
+     */
     protected synchronized void changeRunning(boolean changeto)
     {
         continueRunning = changeto;
     }
     
+    /**
+     * Synchronized method used to determine if the ScoringBot is allowed to continue to run.
+     * @return {@link #continueRunning}.
+     */
     protected synchronized boolean canRun()
     {
         return continueRunning;
     }
     
+    /**
+     * Executes the sound that is given on the computer.
+     * @param soundPath The path to the sound file (preferably .mp3 file).
+     */
     private void executeSound (String soundPath)
     {
         if (whichOS)    //if Linux, true. If windows, false
@@ -91,58 +108,65 @@ public class ScoringBot implements Runnable
     {
         //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
        //This goes and tries to read anything that is stored from a previous round in the file
-        while (canRun())
+        try
         {
-            try {
-                FileInputStream fis = new FileInputStream(savefile);
-                try (ObjectInputStream ois = new ObjectInputStream(fis)) {
-                    solvedVulns = (ArrayList<Vulnerability>) ois.readObject();
-                }
-            } catch (Exception ex) {}
-            
-            boolean worked=false;   //stored if either the output, error, or status effect was met for that iteration
-            for (int i = 0; i < vulns.size(); i++)  //for every problem, look and try and solve it
+            while (canRun())
             {
-                worked=false;
+                try {
+                    FileInputStream fis = new FileInputStream(savefile);
+                    try (ObjectInputStream ois = new ObjectInputStream(fis)) {
+                        solvedVulns = (ArrayList<Vulnerability>) ois.readObject();
+                    }
+                } catch (Exception ex) {}
+
+                boolean worked=false;   //stored if either the output, error, or status effect was met for that iteration
+                for (int i = 0; i < vulns.size(); i++)  //for every problem, look and try and solve it
+                {
+                    worked=false;
+                    try
+                    {
+                        String alloutput = connect.sendMessage(vulns.get(i).toFindVuln());
+                        String[] info = alloutput.split(":");
+
+                        Test1:
+                        for (int a = 0; a < info.length; a++)
+                        {
+                            if (info[a].equals(vulns.get(i).toCompare()))   //If the output is what was expected
+                            {
+                                //have it do good things
+                                if (!solvedVulns.contains(vulns.get(i)))     //If the solvedVulns doesn't already have 
+                                {
+                                    executeSound(pathGoodSound);
+                                    solvedVulns.add(vulns.get(i));
+                                }
+                                worked=true;
+                                break Test1;
+                            }
+                        }
+                        if (!worked && solvedVulns.contains(vulns.get(i)))  //If the command doesn't have the correct output but was solved before, ding them
+                        {
+                            executeSound(pathBadSound);
+                            solvedVulns.remove(vulns.get(i));
+                        }
+
+                    }
+                    catch (Exception e){e.printStackTrace();}
+                }
+
+                //clears out the information in the save file and add in all of the vulnerabilitites
                 try
                 {
-                    String alloutput = connect.sendMessage(vulns.get(i).toFindVuln());
-                    String[] info = alloutput.split(":");
-                    
-                    Test1:
-                    for (int a = 0; a < info.length; a++)
+                    FileOutputStream fos = new FileOutputStream(savefile);
+                    try (ObjectOutputStream oos = new ObjectOutputStream(fos))
                     {
-                        if (info[a].equals(vulns.get(i).toCompare()))   //If the output is what was expected
-                        {
-                            //have it do good things
-                            if (!solvedVulns.contains(vulns.get(i)))     //If the solvedVulns doesn't already have 
-                            {
-                                executeSound(pathGoodSound);
-                                solvedVulns.add(vulns.get(i));
-                            }
-                            worked=true;
-                            break Test1;
-                        }
+                        oos.writeObject(solvedVulns);
                     }
-                    if (!worked && solvedVulns.contains(vulns.get(i)))  //If the command doesn't have the correct output but was solved before, ding them
-                    {
-                        executeSound(pathBadSound);
-                        solvedVulns.remove(vulns.get(i));
-                    }
-                    
-                }
-                catch (Exception e){e.printStackTrace();}
+                } catch (Exception ex) {}
             }
-            
-            //clears out the information in the save file and add in all of the vulnerabilitites
-            try
-            {
-                FileOutputStream fos = new FileOutputStream(savefile);
-                try (ObjectOutputStream oos = new ObjectOutputStream(fos))
-                {
-                    oos.writeObject(solvedVulns);
-                }
-            } catch (Exception ex) {}
+        }
+        finally
+        {
+            return;
         }
     }
 }
