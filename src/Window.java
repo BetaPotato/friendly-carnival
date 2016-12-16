@@ -11,7 +11,7 @@ import java.util.concurrent.Future;
  */
 
 /**
- *
+ * This is an interface that has all of the needed variables and methods for the ScoringBot code to work properly.
  * @author Ryan
  */
 public interface Window
@@ -21,7 +21,7 @@ public interface Window
     
     default Future<?> startScoringBot(ArrayList<Vulnerability> vulns, boolean whichOS)
     {
-        return exec.submit(new ScoringBot(vulns, whichOS));
+        return exec.submit(new ScoringBot(vulns, whichOS, this));
     }
     
     default void stopScoringBot(Future<?> fut)

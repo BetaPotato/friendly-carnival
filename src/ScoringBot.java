@@ -29,6 +29,7 @@ public class ScoringBot implements Runnable
     private final List<Vulnerability> vulns;
     private List<Vulnerability> solvedVulns = new ArrayList<Vulnerability>();
     
+    private final Window GUI;
     private final ComputerConnection connect;
     private final File savefile;
     private final String pathGoodSound = "goodSound";
@@ -39,10 +40,11 @@ public class ScoringBot implements Runnable
 
     /**
      * 
-     * @param vulns
-     * @param whichOS 
+     * @param vulns This is an ArrayList of Vulnerabilities that the ScoringBot will be looking for on the computer to see if they have been solved or not.
+     * @param whichOS This is the boolean of which Operating System the program is currently on. Can only be either {@link #WINDOWS} or {@link #LINUX}.
+     * @param GUI This is a reference to the GUI that will get called back to notify it when a {@link Vulnerability} has been either solved or unsolved.
      */
-    public ScoringBot(ArrayList<Vulnerability> vulns, boolean whichOS)
+    public ScoringBot(ArrayList<Vulnerability> vulns, boolean whichOS, Window GUI)
     {
         this.vulns = vulns;
         this.whichOS = whichOS;
@@ -63,6 +65,8 @@ public class ScoringBot implements Runnable
         executeSoundLinux.add(new RemoteArgs("", false));
         executeSoundWindows = new ArrayList<RemoteArgs>();
         executeSoundLinux.add(new RemoteArgs("start", false));
+        
+        this.GUI = GUI;
     }
     
     /**
@@ -138,6 +142,7 @@ public class ScoringBot implements Runnable
                                 {
                                     executeSound(pathGoodSound);
                                     solvedVulns.add(vulns.get(i));
+                                    GUI.vulnSolved(vulns.get(i));
                                 }
                                 worked=true;
                                 break Test1;
@@ -147,6 +152,7 @@ public class ScoringBot implements Runnable
                         {
                             executeSound(pathBadSound);
                             solvedVulns.remove(vulns.get(i));
+                            GUI.vulnUnSolved(vulns.get(i));
                         }
 
                     }
