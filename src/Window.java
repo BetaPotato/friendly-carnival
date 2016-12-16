@@ -28,4 +28,7 @@ public interface Window
     {
         fut.cancel(true);
     }
+    
+    void vulnSolved(Vulnerability vuln);
+    void vulnUnSolved(Vulnerability vuln);
 }
