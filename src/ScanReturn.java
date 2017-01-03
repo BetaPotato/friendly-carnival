@@ -12,7 +12,7 @@ public class ScanReturn {
     public ImportFile scan = new ImportFile();
     ScanReturn()
     {
-        
+        //nikhil is retarded
     }
     
     public String returnScans(String file, Integer num)
