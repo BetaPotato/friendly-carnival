@@ -33,13 +33,18 @@ public class ImportFile {
             i.useDelimiter(",");
             
             //Read in each value on the line and create a team
+            
             int id = i.nextInt();
+            boolean whichOS = i.nextBoolean();
+            String certifiedComputers = i.next();
+            String findCommand = i.next();
+            String compareOutput = i.next();
+            String createCommand = i.next();
+            int worthPoints = i.nextInt();
             String name = i.next();
-            String commandFind = i.next();
-            boolean os = i.nextBoolean();
+            boolean isPenalty = i.nextBoolean();
             
-            ScanCommand test = new ScanCommand(name, commandFind, os);
-            
+            ScanCommand test = new ScanCommand(whichOS, certifiedComputers, findCommand, compareOutput, createCommand, worthPoints, name, isPenalty);
             vulMap.getScans().put(id, test);
         }
     }
