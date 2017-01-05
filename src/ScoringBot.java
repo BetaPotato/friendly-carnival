@@ -153,7 +153,10 @@ public class ScoringBot implements Runnable
                         }
                         if (!worked && solvedVulns.contains(vulns.get(i)))  //If the command doesn't have the correct output but was solved before, ding them
                         {
-                            executeSound(pathBadSound);
+                            if (!vulns.get(i).isPenalty())
+                                executeSound(pathBadSound);
+                            else
+                                executeSound(pathGoodSound);
                             solvedVulns.remove(vulns.get(i));
                             GUI.vulnUnSolved(vulns.get(i));
                         }
