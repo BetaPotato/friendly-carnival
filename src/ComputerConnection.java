@@ -4,6 +4,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.concurrent.TimeUnit;
 
     /*
@@ -23,7 +24,7 @@ import java.util.concurrent.TimeUnit;
         /**
          * this is the String version of the {@link #arguments}. Converted in the {@link #convertArgumentToString()} method.
          */
-        protected ArrayList<String> command = new ArrayList<String>();	//needs to be set in child class, The command that would be run, used for Key
+        protected ArrayList<String> command = new ArrayList<>();	//needs to be set in child class, The command that would be run, used for Key
         
         /**
          * This is the boolean of which Operating System the program is currently on. Can only be either {@link #WINDOWS} or {@link #LINUX}.
@@ -74,7 +75,7 @@ import java.util.concurrent.TimeUnit;
         /**
          * The amount of time that the program will allow a command to execute before it decides to kill the process.
          */
-        private long executeTime;
+        private final long executeTime;
 
          //@param hostname - The String of the hostname of the computer you want to connect to.
          //@param loginInformation - The information that is used in order to log into the remote computer (like password, keyPath, username).
@@ -119,10 +120,7 @@ import java.util.concurrent.TimeUnit;
                                         }
                                         Thread.yield();
                                         
-                                        for (int a = 0; a < commandseg.length; a++)
-                                        {
-                                            command.add(commandseg[a]);
-                                        }
+                                        command.addAll(Arrays.asList(commandseg));
                                 }
                                 else
                                         throw new InterruptedException();
@@ -185,7 +183,7 @@ import java.util.concurrent.TimeUnit;
                         System.out.println("Breaking up the information given and sorting it");
                         convertArgumentToString();
                         System.out.println(command);
-                        List<String> allTogether = new ArrayList<String>();	//sets up the List that is given to the ProcessBuilder to use to execute winexe
+                        List<String> allTogether = new ArrayList<>();	//sets up the List that is given to the ProcessBuilder to use to execute winexe
                         /*allTogether.add("/mbs/sbin/winexe");
                         allTogether.add("--debug-stderr");	//no say in matter, must stay. This makes sure that the Errors and the Outputs are separated
                         allTogether.add("--uninstall");
