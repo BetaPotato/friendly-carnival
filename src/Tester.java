@@ -93,7 +93,7 @@ public class Tester extends javax.swing.JFrame {
         // TODO add your handling code here:
         ComputerConnection me = new ComputerConnection(ComputerConnection.WINDOWS);
         ArrayList<RemoteArgs> the = new ArrayList<RemoteArgs>();
-        the.add(new RemoteArgs("Netsh Advfirewall show allprofiles | findstr State", false));
+        the.add(new RemoteArgs("sc query \"TermService\" | findstr STATE", false));
         //the.add(new RemoteArgs("Netsh", false));
         //the.add(new RemoteArgs("Advfirewall", false));
         //the.add(new RemoteArgs("show", false));
