@@ -1,2 +1,6 @@
-1,WINDOWS,WINDOWS 7; WINDOWS 8; WINDOWS 10,Netsh Advfirewall show allprofiles | findstr State,State                                 OFFState                                 OFFState                                 OFF,Netsh Advfirewall set allprofiles state off,5,Firewall is turned on,FALSE
-2,WINDOWS,WINDOWS 7; WINDOWS 8; WINDOWS 11,"sc query ""TermService"" | findstr STATE",        STATE              : 4  RUNNING ,"sc config ""TermService"" start= off",5,Started Remote Desktop Service,FALSE
+1,WINDOWS,WINDOWS7; WINDOWS8,Netsh Advfirewall show allprofiles | findstr State,State                                 OFFState                                 OFFState                                 OFF,Netsh Advfirewall set allprofiles state off,5,Firewall is turned on,FALSE
+2,WINDOWS,WINDOWS7; WINDOWS8,"sc query ""TermService"" | findstr STATE",        STATE              : 4  RUNNING ,"sc config ""TermService"" start= off",5,Started Remote Desktop Service,FALSE
+3,WINDOWS,WINDOWS7; WINDOWS8,net accounts | findstr Length of password history,,net accounts /uniquepw:8,5,Enforce password history,
+4,WINDOWS,WINDOWS7; WINDOWS8,net accounts | findstr Maximum password age,,net accounts /maxpwage:14,5,Maximum password age set,
+5,WINDOWS,WINDOWS7; WINDOWS8,net accounts | findstr Minimum password age,,net accounts /minpwage:8,5,Minimum password age set,
+6,WINDOWS,WINDOWS7; WINDOWS8,net accounts | findstr Minimum password length,,net accounts /minpwlen:8,5,Maximum password age set,
