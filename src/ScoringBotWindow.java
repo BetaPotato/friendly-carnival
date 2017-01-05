@@ -8,10 +8,10 @@ import java.util.ArrayList;
 
 /**
  *
- * @author nikhil4patil
+ * @author nikhil4patilSuckz
+ * :(    -nikhil
  */
 public class ScoringBotWindow extends javax.swing.JFrame implements Window {
-    public String[] vulnsSolved;
     
     /**
      * Creates new form mainFrame
@@ -26,7 +26,24 @@ public class ScoringBotWindow extends javax.swing.JFrame implements Window {
         initComponents();
         //TODO Stuff
     }
-
+    
+    public synchronized void vulnSolved(Vulnerability vuln) {
+        modifyTable(vuln, false, vuln.isPenalty());
+    }
+    
+    public synchronized void vulnUnSolved(Vulnerability vuln) {
+        modifyTable(vuln, true, vuln.isPenalty());
+    }
+    
+    protected synchronized void modifyTable(Vulnerability mod, boolean rm, boolean isPenalty) {
+        if (rm) {
+            
+        }
+        else {
+            
+        }
+    }
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always

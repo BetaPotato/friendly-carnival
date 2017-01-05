@@ -24,6 +24,23 @@ public class SetupWindow extends javax.swing.JFrame implements Window {
         initComponents();
     }
 
+    public synchronized void vulnSolved(Vulnerability vuln) {
+        modifyTable(vuln, false, vuln.isPenalty());
+    }
+    
+    public synchronized void vulnUnSolved(Vulnerability vuln) {
+        modifyTable(vuln, true, vuln.isPenalty());
+    }
+    
+    protected synchronized void modifyTable(Vulnerability mod, boolean rm, boolean isPenalty) {
+        if (rm) {
+            
+        }
+        else {
+            
+        }
+    }
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
