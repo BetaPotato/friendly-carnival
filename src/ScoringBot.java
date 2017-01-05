@@ -135,12 +135,15 @@ public class ScoringBot implements Runnable
                         Test1:
                         for (int a = 0; a < info.length; a++)
                         {
-                            if (info[a].equals(vulns.get(i).toCompare()))   //If the output is what was expected
+                            if (info[a].equals(vulns.get(i).toCompare()))   //If the output is what was expected to satisfy condition
                             {
                                 //have it do good things
                                 if (!solvedVulns.contains(vulns.get(i)))     //If the solvedVulns doesn't already have 
                                 {
-                                    executeSound(pathGoodSound);
+                                    if (!vulns.get(i).isPenalty())
+                                        executeSound(pathGoodSound);
+                                    else
+                                        executeSound(pathBadSound);
                                     solvedVulns.add(vulns.get(i));
                                     GUI.vulnSolved(vulns.get(i));
                                 }
