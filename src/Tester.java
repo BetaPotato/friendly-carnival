@@ -10,7 +10,7 @@ import java.util.Collection;
 
 /**
  *
- * @author Ryan
+ * @author RyanIsDumb
  */
 public class Tester extends javax.swing.JFrame {
 
