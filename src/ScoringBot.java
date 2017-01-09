@@ -23,11 +23,11 @@ public class ScoringBot implements Runnable
     public static final boolean LINUX = true;     //an answer for whichOS
     public static final boolean WINDOWS = false;  //an answer for whichOS
     private boolean continueRunning = true;
-    private final int totalPoints;
-    private int currentPoints;
+    //private final int totalPoints;
+    //private int currentPoints;
 
     private final List<Vulnerability> vulns;
-    private List<Vulnerability> solvedVulns = new ArrayList<Vulnerability>();
+    private List<Vulnerability> solvedVulns = new ArrayList<>();
     
     private final Window GUI;
     private final ComputerConnection connect;
@@ -50,7 +50,7 @@ public class ScoringBot implements Runnable
         this.whichOS = whichOS;
         connect = new ComputerConnection(whichOS);
         savefile = new File("savefile.txt");
-        currentPoints = 0;
+        /*currentPoints = 0;
         
         int totals = 0;
         for (int i = 0; i < vulns.size(); i++)
@@ -58,12 +58,13 @@ public class ScoringBot implements Runnable
             totals += vulns.get(i).pointsWorth();
         }
         totalPoints = totals;
+        */
         
         //These need to be changed so they actually are able to be executed
         //CHANGE
-        executeSoundLinux = new ArrayList<RemoteArgs>();
+        executeSoundLinux = new ArrayList<>();
         executeSoundLinux.add(new RemoteArgs("", false));
-        executeSoundWindows = new ArrayList<RemoteArgs>();
+        executeSoundWindows = new ArrayList<>();
         executeSoundLinux.add(new RemoteArgs("start", false));
         
         this.GUI = GUI;
@@ -108,6 +109,7 @@ public class ScoringBot implements Runnable
     }
     
     //@Override
+    @Override
     public void run()
     {
         //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
@@ -133,10 +135,8 @@ public class ScoringBot implements Runnable
                         String[] info = alloutput.split(":");
 
                         Test1:
-                        for (int a = 0; a < info.length; a++)
-                        {
-                            if (info[a].equals(vulns.get(i).toCompare()))   //If the output is what was expected to satisfy condition
-                            {
+                        for (String info1 : info) {
+                            if (info1.equals(vulns.get(i).toCompare())) {
                                 //have it do good things
                                 if (!solvedVulns.contains(vulns.get(i)))     //If the solvedVulns doesn't already have 
                                 {
@@ -162,7 +162,7 @@ public class ScoringBot implements Runnable
                         }
 
                     }
-                    catch (Exception e){e.printStackTrace();}
+                    catch (Exception e){}
                 }
 
                 //clears out the information in the save file and add in all of the vulnerabilitites
