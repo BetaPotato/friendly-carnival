@@ -1,6 +1,7 @@
 
 import java.awt.Color;
 import java.awt.Component;
+import java.util.ArrayList;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.TableCellRenderer;
@@ -15,30 +16,13 @@ import javax.swing.table.TableCellRenderer;
  *
  * @author wesley
  */
-public class SetupWindow extends javax.swing.JFrame implements Window {
-    
+public class SetupWindow extends javax.swing.JFrame {
+    private ArrayList<Vulnerability> foundVulns,dataBaseVulns;
     /**
      * Creates new form SetupWindow
      */
     public SetupWindow() {
         initComponents();
-    }
-
-    public synchronized void vulnSolved(Vulnerability vuln) {
-        modifyTable(vuln, false, vuln.isPenalty());
-    }
-    
-    public synchronized void vulnUnSolved(Vulnerability vuln) {
-        modifyTable(vuln, true, vuln.isPenalty());
-    }
-    
-    protected synchronized void modifyTable(Vulnerability mod, boolean rm, boolean isPenalty) {
-        if (rm) {
-            
-        }
-        else {
-            
-        }
     }
     
     /**
@@ -57,9 +41,9 @@ public class SetupWindow extends javax.swing.JFrame implements Window {
         jButton3 = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         jScrollPane2 = new javax.swing.JScrollPane();
-        jTable2 = new javax.swing.JTable();
+        foundDatabase_jTable = new javax.swing.JTable();
         jScrollPane3 = new javax.swing.JScrollPane();
-        jTable3 = new javax.swing.JTable();
+        toBeAdded_jTable = new javax.swing.JTable();
         jButton1 = new javax.swing.JButton();
         jButton4 = new javax.swing.JButton();
         jLabel4 = new javax.swing.JLabel();
@@ -106,6 +90,12 @@ public class SetupWindow extends javax.swing.JFrame implements Window {
             }
         });
 
+        jPanel1.addContainerListener(new java.awt.event.ContainerAdapter() {
+            public void componentAdded(java.awt.event.ContainerEvent evt) {
+                jPanel1ComponentAdded(evt);
+            }
+        });
+
         jButton3.setText("Search");
         jButton3.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -116,7 +106,7 @@ public class SetupWindow extends javax.swing.JFrame implements Window {
         jLabel1.setForeground(new java.awt.Color(51, 204, 0));
         jLabel1.setText("■ On System");
 
-        jTable2.setModel(new javax.swing.table.DefaultTableModel(
+        foundDatabase_jTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null},
                 {null},
@@ -142,9 +132,9 @@ public class SetupWindow extends javax.swing.JFrame implements Window {
                 return canEdit [columnIndex];
             }
         });
-        jScrollPane2.setViewportView(jTable2);
+        jScrollPane2.setViewportView(foundDatabase_jTable);
 
-        jTable3.setModel(new javax.swing.table.DefaultTableModel(
+        toBeAdded_jTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null},
                 {null},
@@ -170,14 +160,14 @@ public class SetupWindow extends javax.swing.JFrame implements Window {
                 return canEdit [columnIndex];
             }
         });
-        jScrollPane3.setViewportView(jTable3);
+        jScrollPane3.setViewportView(toBeAdded_jTable);
 
         jButton1.setText("Add >");
 
         jButton4.setText("< Remove");
 
         jLabel4.setForeground(new java.awt.Color(0, 0, 153));
-        jLabel4.setText("■ In Database");
+        jLabel4.setText("■ Must Be Added");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -214,7 +204,7 @@ public class SetupWindow extends javax.swing.JFrame implements Window {
                         .addComponent(jLabel4))
                     .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 249, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 249, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 89, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jButton3)
                 .addContainerGap())
         );
@@ -229,7 +219,7 @@ public class SetupWindow extends javax.swing.JFrame implements Window {
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 381, Short.MAX_VALUE)
+            .addGap(0, 306, Short.MAX_VALUE)
         );
 
         jTabbedPane1.addTab("Scoring Setup", jPanel3);
@@ -242,7 +232,7 @@ public class SetupWindow extends javax.swing.JFrame implements Window {
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 381, Short.MAX_VALUE)
+            .addGap(0, 306, Short.MAX_VALUE)
         );
 
         jTabbedPane1.addTab("Solver", jPanel2);
@@ -255,14 +245,16 @@ public class SetupWindow extends javax.swing.JFrame implements Window {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jTabbedPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 406, Short.MAX_VALUE)
+            .addComponent(jTabbedPane1)
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void jTabbedPane1ComponentAdded(java.awt.event.ContainerEvent evt) {//GEN-FIRST:event_jTabbedPane1ComponentAdded
-        jTable2.setDefaultRenderer(Object.class, new DefaultTableCellRenderer() {
+        dataBaseVulns = new ArrayList();
+        searchForVulns();
+        foundDatabase_jTable.setDefaultRenderer(Object.class, new DefaultTableCellRenderer() {
             @Override
             public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
                 Component c = super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
@@ -280,6 +272,10 @@ public class SetupWindow extends javax.swing.JFrame implements Window {
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         //Refresh table here
     }//GEN-LAST:event_jButton3ActionPerformed
+
+    private void jPanel1ComponentAdded(java.awt.event.ContainerEvent evt) {//GEN-FIRST:event_jPanel1ComponentAdded
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jPanel1ComponentAdded
 
     /**
      * @param args the command line arguments
@@ -319,6 +315,7 @@ public class SetupWindow extends javax.swing.JFrame implements Window {
     
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JTable foundDatabase_jTable;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
@@ -332,7 +329,10 @@ public class SetupWindow extends javax.swing.JFrame implements Window {
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JTabbedPane jTabbedPane1;
     private javax.swing.JTable jTable1;
-    private javax.swing.JTable jTable2;
-    private javax.swing.JTable jTable3;
+    private javax.swing.JTable toBeAdded_jTable;
     // End of variables declaration//GEN-END:variables
+
+    private void searchForVulns() {
+        foundVulns = new ArrayList();
+    }
 }

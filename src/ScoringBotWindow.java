@@ -1,4 +1,9 @@
+import java.sql.Time;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
+import javax.swing.JTable;
+import javax.swing.table.DefaultTableColumnModel;
+import javax.swing.table.DefaultTableModel;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -10,6 +15,7 @@ import java.util.ArrayList;
  *
  * @author nikhil4patilSuckz
  * :(    -nikhil
+ * >:)   -wesley
  */
 public class ScoringBotWindow extends javax.swing.JFrame implements Window {
     
@@ -27,20 +33,25 @@ public class ScoringBotWindow extends javax.swing.JFrame implements Window {
         //TODO Stuff
     }
     
-    public synchronized void vulnSolved(Vulnerability vuln) {
+    public void vulnSolved(Vulnerability vuln) {
         modifyTable(vuln, false, vuln.isPenalty());
     }
     
-    public synchronized void vulnUnSolved(Vulnerability vuln) {
+    public void vulnUnSolved(Vulnerability vuln) {
         modifyTable(vuln, true, vuln.isPenalty());
     }
     
     protected synchronized void modifyTable(Vulnerability mod, boolean rm, boolean isPenalty) {
+        JTable table = ((isPenalty) ? penalties_jTable : points_jTable);
         if (rm) {
-            
+            for (int j = 0; j < table.getRowCount(); j++) {
+                if (table.getValueAt(j, 0).equals(mod.getName())) {
+                    ((DefaultTableModel)table.getModel()).removeRow(j);
+                }
+            }
         }
         else {
-            
+            ((DefaultTableModel)table.getModel()).addRow(new Object[]{mod.getName(), LocalDateTime.now().toString().split("T")[1]});
         }
     }
     
