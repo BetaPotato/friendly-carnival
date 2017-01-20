@@ -7,20 +7,27 @@
 /**
  *
  * @author lee_866317
+ * Fuck Off NSA
  */
 public class ScanReturn {
-    public ImportFile scan = new ImportFile();
-    ScanReturn()
+    public ImportFile offm8 = new ImportFile();
+    public VulnerabilityMap vulMap = new VulnerabilityMap();
+    public ScanReturn()
     {
-        //nikhil is retarded
     }
     
-    public String returnScans(String file, Integer num)
+    public String returnScans(String file, int number)
     {
-        scan.importVul(file);
-        ScanCommand test = scan.vulMap.getScans().get(num);
+        offm8.importVul(file);
+        ScanCommand test = offm8.vulMap.getScans().get(number);
+        String os = test.getOS();
         String name = test.getName();
-        return name;
+        String findCommand = test.getFindCommand();
+        String createCommand = test.getCreateCommand();
+        String certifiedComputers = test.getCertifiedComputers();
+        String worthPoints = test.getWorthPoints();
+        
+        return name+"\n"+os+"\n"+certifiedComputers+"\n"+findCommand+"\n"+createCommand+"\n"+worthPoints;
         
     }
 

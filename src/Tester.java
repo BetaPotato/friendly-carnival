@@ -1,6 +1,7 @@
 import java.util.TreeMap;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.InputMismatchException;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -109,18 +110,14 @@ public class Tester extends javax.swing.JFrame {
     private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
         // TODO add your handling code here:
         
+        
     }//GEN-LAST:event_jTextField1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-
+        String file = "Vulnerabilities1.csv";
+        ScanReturn test = new ScanReturn();
+        System.out.println(test.returnScans(file, 2));
         
-        int number = 1;
-        while(number < 5)
-        {
-            ScanReturn test = new ScanReturn();
-            System.out.println(test.returnScans("Vulnerabilities.csv", number));
-            number++;
-        }
     }//GEN-LAST:event_jButton2ActionPerformed
 
     /**

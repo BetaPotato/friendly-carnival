@@ -1,23 +1,19 @@
 
-import java.util.ArrayList;
 
 
 /**
  *
  * @author lee_866317
- * This program is a class that stores the TreeMap ID, Vulnerability Name, and CMD Text
- * 
- * Is this class a copy of Vulnerability?
  */
 public class ScanCommand {
-    private final boolean whichOS;
-    private final String certifiedComputers;
-    private final String findCommand;
-    private final String compareOutput;
-    private final String createCommand;
-    private final int worthPoints;
-    private final String name;
-    private final boolean isPenalty;
+    private boolean whichOS;
+    private String certifiedComputers;
+    private String findCommand;
+    private String compareOutput;
+    private String createCommand;
+    private int worthPoints;
+    private String name;
+    private boolean isPenalty;
 
     
     public ScanCommand(boolean whichOS, String certifiedComputers, String findCommand, String compareOutput, String createCommand, int worthPoints, String name, boolean isPenalty)
@@ -44,30 +40,37 @@ public class ScanCommand {
         isPenalty = false;
     }
     public String getName() {
-        return name;
+        return "Vulnerability Name: "+name;
     }   
 
     public String getFindCommand(){
-        return findCommand;
+        return "The command to find this vulnerability is: "+findCommand;
     }
     
-    public boolean getOS(){
-        return whichOS;
+    public String getOS(){
+        if(whichOS == true)
+        {
+            return "This vulnerablity exists in Windows";
+        }
+        else
+        {
+            return "This vulnerability exists in Linux";
+        }
     }
     public String getCreateCommand() {
-        return createCommand;
+        return "The command to create this vunlerability is: "+createCommand;
     }   
 
     public String getCertifiedComputers(){
-        return certifiedComputers;
+        return "The following commands work in "+certifiedComputers;
     }
     
     public String getCompareOutput(){
         return compareOutput;
     }
     
-    public int getWorthPoints(){
-        return worthPoints;
+    public String getWorthPoints(){
+        return "This vulnerability is worth "+worthPoints+" points.";
     }
     
     public boolean getIsPenalty(){
