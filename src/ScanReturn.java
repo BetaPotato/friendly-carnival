@@ -7,7 +7,7 @@
 /**
  *
  * @author lee_866317
- * Fuck Off NSA
+
  */
 public class ScanReturn {
     public ImportFile offm8 = new ImportFile();
