@@ -6,6 +6,8 @@ import java.util.ArrayList;
  *
  * @author lee_866317
  * This program is a class that stores the TreeMap ID, Vulnerability Name, and CMD Text
+ * 
+ * Is this class a copy of Vulnerability?
  */
 public class ScanCommand {
     private boolean whichOS;

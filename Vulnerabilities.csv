@@ -1,6 +1,6 @@
-1,WINDOWS,WINDOWS7; WINDOWS8,Netsh Advfirewall show allprofiles | findstr State,State                                 OFFState                                 OFFState                                 OFF,Netsh Advfirewall set allprofiles state off,5,Firewall is turned on,FALSE
-2,WINDOWS,WINDOWS7; WINDOWS8,"sc query ""TermService"" | findstr STATE",        STATE              : 4  RUNNING ,"sc config ""TermService"" start= off",5,Started Remote Desktop Service,FALSE
-3,WINDOWS,WINDOWS7; WINDOWS8,net accounts | findstr Length of password history,,net accounts /uniquepw:8,5,Enforce password history,
-4,WINDOWS,WINDOWS7; WINDOWS8,net accounts | findstr Maximum password age,,net accounts /maxpwage:14,5,Maximum password age set,
-5,WINDOWS,WINDOWS7; WINDOWS8,net accounts | findstr Minimum password age,,net accounts /minpwage:8,5,Minimum password age set,
-6,WINDOWS,WINDOWS7; WINDOWS8,net accounts | findstr Minimum password length,,net accounts /minpwlen:8,5,Maximum password age set,
+Firewall is turned on,FALSE,WINDOWS,WINDOWS7; WINDOWS8,Netsh Advfirewall show allprofiles | findstr State,State                                 OFFState                                 OFFState                                 OFF,Netsh Advfirewall set allprofiles state off,5,FALSE
+Started Remote Desktop Service,FALSE,WINDOWS,WINDOWS7; WINDOWS8,"sc query ""TermService"" | findstr STATE",        STATE              : 4  RUNNING ,"sc config ""TermService"" start= off",5,FALSE
+Enforce password history,FALSE,WINDOWS,WINDOWS7; WINDOWS8,net accounts | findstr Length of password history,,net accounts /uniquepw:8,5,FALSE
+Maximum password age set,FALSE,WINDOWS,WINDOWS7; WINDOWS8,net accounts | findstr Maximum password age,,net accounts /maxpwage:14,5,FALSE
+Minimum password age set,FALSE,WINDOWS,WINDOWS7; WINDOWS8,net accounts | findstr Minimum password age,,net accounts /minpwage:8,5,FALSE
+Minimum password length set,FALSE,WINDOWS,WINDOWS7; WINDOWS8,net accounts | findstr Minimum password length,,net accounts /minpwlen:8,5,FALSE

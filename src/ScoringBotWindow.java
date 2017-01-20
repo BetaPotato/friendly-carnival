@@ -20,7 +20,7 @@ import javax.swing.table.DefaultTableModel;
 public class ScoringBotWindow extends javax.swing.JFrame implements Window {
     
     /**
-     * Creates new form mainFrame
+     * Creates new form scoringBotWindow
      */
     
     public ScoringBotWindow() {
@@ -270,12 +270,12 @@ public class ScoringBotWindow extends javax.swing.JFrame implements Window {
     }// </editor-fold>//GEN-END:initComponents
 
     private void points_jLabelMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_points_jLabelMouseClicked
-        
+        //For Testing
         vulnSolved(new Vulnerability(Vulnerability.LINUX, new char[2], new ArrayList(), "something", new ArrayList(), 10, "Something Evil", false));
     }//GEN-LAST:event_points_jLabelMouseClicked
 
     private void penalties_jLabelMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_penalties_jLabelMouseClicked
-        
+        //Also For Testing
         vulnSolved(new Vulnerability(Vulnerability.LINUX, new char[2], new ArrayList(), "something", new ArrayList(), 10, "Something Evil", true));
     }//GEN-LAST:event_penalties_jLabelMouseClicked
 
