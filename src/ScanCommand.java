@@ -10,14 +10,14 @@ import java.util.ArrayList;
  * Is this class a copy of Vulnerability?
  */
 public class ScanCommand {
-    private boolean whichOS;
-    private String certifiedComputers;
-    private String findCommand;
-    private String compareOutput;
-    private String createCommand;
-    private int worthPoints;
-    private String name;
-    private boolean isPenalty;
+    private final boolean whichOS;
+    private final String certifiedComputers;
+    private final String findCommand;
+    private final String compareOutput;
+    private final String createCommand;
+    private final int worthPoints;
+    private final String name;
+    private final boolean isPenalty;
 
     
     public ScanCommand(boolean whichOS, String certifiedComputers, String findCommand, String compareOutput, String createCommand, int worthPoints, String name, boolean isPenalty)
