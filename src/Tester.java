@@ -114,10 +114,7 @@ public class Tester extends javax.swing.JFrame {
     }//GEN-LAST:event_jTextField1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        String file = "Vulnerabilities1.csv";
-        ScanReturn test = new ScanReturn();
-        System.out.println(test.returnScans(file, 2));
-        
+
     }//GEN-LAST:event_jButton2ActionPerformed
 
     /**
