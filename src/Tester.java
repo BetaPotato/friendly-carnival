@@ -92,9 +92,11 @@ public class Tester extends javax.swing.JFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
-        ComputerConnection me = new ComputerConnection(ComputerConnection.WINDOWS);
+        ComputerConnection me = new ComputerConnection(ComputerConnection.LINUX);
         ArrayList<RemoteArgs> the = new ArrayList<RemoteArgs>();
-        the.add(new RemoteArgs("sc query \"TermService\" | findstr STATE", false));
+        //the.add(new RemoteArgs("sc query \"TermService\" | findstr STATE", false));
+        the.add(new RemoteArgs("cat", false));
+        the.add(new RemoteArgs("/home/wesley/Documents/Something", false));
         //the.add(new RemoteArgs("Netsh", false));
         //the.add(new RemoteArgs("Advfirewall", false));
         //the.add(new RemoteArgs("show", false));
@@ -114,7 +116,10 @@ public class Tester extends javax.swing.JFrame {
     }//GEN-LAST:event_jTextField1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-
+        String file = "Vulnerabilities1.csv";
+        ScanReturn test = new ScanReturn();
+        System.out.println(test.returnScans(file, 2));
+        
     }//GEN-LAST:event_jButton2ActionPerformed
 
     /**

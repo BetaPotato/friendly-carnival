@@ -1,9 +1,16 @@
 
 import java.awt.Color;
 import java.awt.Component;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
+import java.io.LineNumberReader;
 import java.util.ArrayList;
+import java.util.Scanner;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableCellRenderer;
+import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableCellRenderer;
 
 /*
@@ -17,7 +24,8 @@ import javax.swing.table.TableCellRenderer;
  * @author wesley
  */
 public class SetupWindow extends javax.swing.JFrame {
-    private ArrayList<String> foundVulns,dataBaseVulns;
+    private ArrayList<String> foundVulns;
+    private ArrayList<Vulnerability> selectedVulns;
     
     public ImportFile file;
     public boolean currentOS;
@@ -28,7 +36,13 @@ public class SetupWindow extends javax.swing.JFrame {
         initComponents();
         currentOS = System.getProperty("os.name").equals("Linux");
         file = new ImportFile();
-        file.importVul("Vulnerabilities.csv");
+        file.importVul("Vulnerabilities1.csv");
+        for (Vulnerability v : file.vulMap.getScans().values()) {
+            if (v.getOS() == currentOS)
+                ((DefaultTableModel)foundDatabase_jTable.getModel()).addRow(new Object[]{v.getName()});
+        }
+        selectedVulns = new ArrayList();
+        searchForVulns();
     }
     
     /**
@@ -42,22 +56,17 @@ public class SetupWindow extends javax.swing.JFrame {
 
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
-        main_jTabbedPane = new javax.swing.JTabbedPane();
-        vulnerabilitySetup_jPanel = new javax.swing.JPanel();
-        jButton3 = new javax.swing.JButton();
-        jLabel1 = new javax.swing.JLabel();
-        jScrollPane2 = new javax.swing.JScrollPane();
-        foundDatabase_jTable = new javax.swing.JTable();
+        jLabel2 = new javax.swing.JLabel();
         jScrollPane3 = new javax.swing.JScrollPane();
         toBeAdded_jTable = new javax.swing.JTable();
-        jButton1 = new javax.swing.JButton();
-        jButton4 = new javax.swing.JButton();
-        jLabel4 = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
-        scoringSetup_jPanel = new javax.swing.JPanel();
-        launchScoringBot_jButton = new javax.swing.JButton();
-        solver_jPanel = new javax.swing.JPanel();
+        addVuln_jButton = new javax.swing.JButton();
+        removeVuln_jButton = new javax.swing.JButton();
+        jLabel1 = new javax.swing.JLabel();
+        jLabel4 = new javax.swing.JLabel();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        foundDatabase_jTable = new javax.swing.JTable();
+        launchSB_jButton = new javax.swing.JButton();
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -92,56 +101,17 @@ public class SetupWindow extends javax.swing.JFrame {
         }
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-
-        main_jTabbedPane.addContainerListener(new java.awt.event.ContainerAdapter() {
+        addContainerListener(new java.awt.event.ContainerAdapter() {
             public void componentAdded(java.awt.event.ContainerEvent evt) {
-                main_jTabbedPaneComponentAdded(evt);
+                formComponentAdded(evt);
             }
         });
 
-        vulnerabilitySetup_jPanel.addContainerListener(new java.awt.event.ContainerAdapter() {
-            public void componentAdded(java.awt.event.ContainerEvent evt) {
-                vulnerabilitySetup_jPanelComponentAdded(evt);
-            }
-        });
-
-        jButton3.setText("Search");
-        jButton3.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton3ActionPerformed(evt);
-            }
-        });
-
-        jLabel1.setForeground(new java.awt.Color(51, 204, 0));
-        jLabel1.setText("■ On System");
-
-        foundDatabase_jTable.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null},
-                {null},
-                {null},
-                {null}
-            },
-            new String [] {
-                "Description"
-            }
-        ) {
-            Class[] types = new Class [] {
-                java.lang.String.class
-            };
-
-            public Class getColumnClass(int columnIndex) {
-                return types [columnIndex];
-            }
-        });
-        jScrollPane2.setViewportView(foundDatabase_jTable);
+        jLabel2.setText("Available");
 
         toBeAdded_jTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null},
-                {null},
-                {null},
-                {null}
+
             },
             new String [] {
                 "Description"
@@ -162,57 +132,106 @@ public class SetupWindow extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
+        toBeAdded_jTable.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                toBeAdded_jTableMouseClicked(evt);
+            }
+        });
         jScrollPane3.setViewportView(toBeAdded_jTable);
 
-        jButton1.setText("Add >");
+        jLabel3.setText("Acting On");
 
-        jButton4.setText("< Remove");
+        addVuln_jButton.setText("Add >");
+        addVuln_jButton.setEnabled(false);
+        addVuln_jButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                addVuln_jButtonActionPerformed(evt);
+            }
+        });
+
+        removeVuln_jButton.setText("< Remove");
+        removeVuln_jButton.setEnabled(false);
+        removeVuln_jButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                removeVuln_jButtonActionPerformed(evt);
+            }
+        });
+
+        jLabel1.setForeground(new java.awt.Color(51, 204, 0));
+        jLabel1.setText("■ On System");
 
         jLabel4.setForeground(new java.awt.Color(0, 0, 153));
         jLabel4.setText("■ In Database");
 
-        jLabel2.setText("Available");
+        foundDatabase_jTable.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
 
-        jLabel3.setText("Acting On");
+            },
+            new String [] {
+                "Description"
+            }
+        ) {
+            Class[] types = new Class [] {
+                java.lang.String.class
+            };
 
-        javax.swing.GroupLayout vulnerabilitySetup_jPanelLayout = new javax.swing.GroupLayout(vulnerabilitySetup_jPanel);
-        vulnerabilitySetup_jPanel.setLayout(vulnerabilitySetup_jPanelLayout);
-        vulnerabilitySetup_jPanelLayout.setHorizontalGroup(
-            vulnerabilitySetup_jPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(vulnerabilitySetup_jPanelLayout.createSequentialGroup()
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+        });
+        foundDatabase_jTable.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                foundDatabase_jTableMouseClicked(evt);
+            }
+        });
+        jScrollPane2.setViewportView(foundDatabase_jTable);
+
+        launchSB_jButton.setText("Launch Scoring Bot");
+        launchSB_jButton.setEnabled(false);
+        launchSB_jButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                launchSB_jButtonActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
+        getContentPane().setLayout(layout);
+        layout.setHorizontalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(vulnerabilitySetup_jPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jButton3)
-                    .addGroup(vulnerabilitySetup_jPanelLayout.createSequentialGroup()
-                        .addGroup(vulnerabilitySetup_jPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(vulnerabilitySetup_jPanelLayout.createSequentialGroup()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
                                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 258, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addGroup(vulnerabilitySetup_jPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                     .addComponent(jLabel1)
                                     .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(jButton4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                                    .addComponent(removeVuln_jButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(addVuln_jButton, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE)))
                             .addComponent(jLabel2))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(vulnerabilitySetup_jPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel3)
-                            .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 258, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addContainerGap(25, Short.MAX_VALUE))
+                            .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 258, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addComponent(launchSB_jButton))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
-        vulnerabilitySetup_jPanelLayout.setVerticalGroup(
-            vulnerabilitySetup_jPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(vulnerabilitySetup_jPanelLayout.createSequentialGroup()
+        layout.setVerticalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(vulnerabilitySetup_jPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
                     .addComponent(jLabel3))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(vulnerabilitySetup_jPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(vulnerabilitySetup_jPanelLayout.createSequentialGroup()
-                        .addComponent(jButton1)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(addVuln_jButton)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButton4)
+                        .addComponent(removeVuln_jButton)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jLabel1)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -220,96 +239,74 @@ public class SetupWindow extends javax.swing.JFrame {
                     .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 249, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 249, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jButton3)
+                .addComponent(launchSB_jButton)
                 .addContainerGap())
-        );
-
-        main_jTabbedPane.addTab("Vulnerability Setup", vulnerabilitySetup_jPanel);
-
-        launchScoringBot_jButton.setText("Launch Scoring Bot");
-        launchScoringBot_jButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                launchScoringBot_jButtonActionPerformed(evt);
-            }
-        });
-
-        javax.swing.GroupLayout scoringSetup_jPanelLayout = new javax.swing.GroupLayout(scoringSetup_jPanel);
-        scoringSetup_jPanel.setLayout(scoringSetup_jPanelLayout);
-        scoringSetup_jPanelLayout.setHorizontalGroup(
-            scoringSetup_jPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(scoringSetup_jPanelLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(launchScoringBot_jButton)
-                .addContainerGap(499, Short.MAX_VALUE))
-        );
-        scoringSetup_jPanelLayout.setVerticalGroup(
-            scoringSetup_jPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(scoringSetup_jPanelLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(launchScoringBot_jButton)
-                .addContainerGap(290, Short.MAX_VALUE))
-        );
-
-        main_jTabbedPane.addTab("Scoring Setup", scoringSetup_jPanel);
-
-        javax.swing.GroupLayout solver_jPanelLayout = new javax.swing.GroupLayout(solver_jPanel);
-        solver_jPanel.setLayout(solver_jPanelLayout);
-        solver_jPanelLayout.setHorizontalGroup(
-            solver_jPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 641, Short.MAX_VALUE)
-        );
-        solver_jPanelLayout.setVerticalGroup(
-            solver_jPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 329, Short.MAX_VALUE)
-        );
-
-        main_jTabbedPane.addTab("Solver", solver_jPanel);
-
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(main_jTabbedPane)
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(main_jTabbedPane)
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void main_jTabbedPaneComponentAdded(java.awt.event.ContainerEvent evt) {//GEN-FIRST:event_main_jTabbedPaneComponentAdded
-        dataBaseVulns = new ArrayList();
+    private void addVuln_jButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addVuln_jButtonActionPerformed
+        for (Vulnerability v : file.vulMap.getScans().values()) {
+            if (v.getName().equals(foundDatabase_jTable.getValueAt(foundDatabase_jTable.getSelectedRow(), foundDatabase_jTable.getSelectedColumn()))) {
+                selectedVulns.add(v);
+                ((DefaultTableModel)foundDatabase_jTable.getModel()).removeRow(foundDatabase_jTable.getSelectedRow());
+                ((DefaultTableModel)toBeAdded_jTable.getModel()).addRow(new Object[]{v.getName()});
+                break;
+            }
+        }
+        addVuln_jButton.setEnabled(foundDatabase_jTable.getSelectedRow() != -1);
+        removeVuln_jButton.setEnabled(toBeAdded_jTable.getSelectedRow() != -1);
+        launchSB_jButton.setEnabled(toBeAdded_jTable.getRowCount() > 0);
+    }//GEN-LAST:event_addVuln_jButtonActionPerformed
+
+    private void launchSB_jButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_launchSB_jButtonActionPerformed
+        ScoringBotWindow sw = new ScoringBotWindow(selectedVulns.size(), countPoints());
+        System.out.println(selectedVulns.size() + "\t" + countPoints());
+        sw.setVisible(true);
+        sw.startScoringBot(selectedVulns, currentOS, sw);
+    }//GEN-LAST:event_launchSB_jButtonActionPerformed
+
+    private void foundDatabase_jTableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_foundDatabase_jTableMouseClicked
+        addVuln_jButton.setEnabled(foundDatabase_jTable.getSelectedRow() != -1);
+        removeVuln_jButton.setEnabled(toBeAdded_jTable.getSelectedRow() != -1);
+    }//GEN-LAST:event_foundDatabase_jTableMouseClicked
+
+    private void toBeAdded_jTableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_toBeAdded_jTableMouseClicked
+        addVuln_jButton.setEnabled(foundDatabase_jTable.getSelectedRow() != -1);
+        removeVuln_jButton.setEnabled(toBeAdded_jTable.getSelectedRow() != -1);
+    }//GEN-LAST:event_toBeAdded_jTableMouseClicked
+
+    private void removeVuln_jButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_removeVuln_jButtonActionPerformed
+        for (Vulnerability v : selectedVulns) {
+            if (v.getName().equals(toBeAdded_jTable.getValueAt(toBeAdded_jTable.getSelectedRow(), toBeAdded_jTable.getSelectedColumn()))) {
+                selectedVulns.remove(v);
+                ((DefaultTableModel)toBeAdded_jTable.getModel()).removeRow(toBeAdded_jTable.getSelectedRow());
+                ((DefaultTableModel)foundDatabase_jTable.getModel()).addRow(new Object[]{v.getName()});
+                break;
+            }
+        }
+        addVuln_jButton.setEnabled(foundDatabase_jTable.getSelectedRow() != -1);
+        removeVuln_jButton.setEnabled(toBeAdded_jTable.getSelectedRow() != -1);
+        launchSB_jButton.setEnabled(toBeAdded_jTable.getRowCount() > 0);
+    }//GEN-LAST:event_removeVuln_jButtonActionPerformed
+
+    private void formComponentAdded(java.awt.event.ContainerEvent evt) {//GEN-FIRST:event_formComponentAdded
         searchForVulns();
         foundDatabase_jTable.setDefaultRenderer(Object.class, new DefaultTableCellRenderer() {
             @Override
             public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
                 Component c = super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
-                if (foundVulns.contains(value)) {
-                    setBackground(jLabel1.getForeground());
-                }
-                else {
-                    setBackground(jLabel4.getForeground());
+                setBackground(jLabel4.getForeground());
+                for (String s : foundVulns) {
+                    if (s.equals(value)) {
+                        setBackground(jLabel1.getForeground());
+                    }
                 }
                 return c;
             }
         });
-    }//GEN-LAST:event_main_jTabbedPaneComponentAdded
-
-    private void launchScoringBot_jButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_launchScoringBot_jButtonActionPerformed
-        ScoringBotWindow sw = new ScoringBotWindow();
-        sw.setVisible(true);
-        ScoringBot sb = new ScoringBot(new ArrayList(),currentOS, sw);        
-    }//GEN-LAST:event_launchScoringBot_jButtonActionPerformed
-
-    private void vulnerabilitySetup_jPanelComponentAdded(java.awt.event.ContainerEvent evt) {//GEN-FIRST:event_vulnerabilitySetup_jPanelComponentAdded
-        // TODO add your handling code here:
-    }//GEN-LAST:event_vulnerabilitySetup_jPanelComponentAdded
-
-    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-        //Refresh table here
-    }//GEN-LAST:event_jButton3ActionPerformed
+    }//GEN-LAST:event_formComponentAdded
 
     /**
      * @param args the command line arguments
@@ -349,10 +346,8 @@ public class SetupWindow extends javax.swing.JFrame {
     
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton addVuln_jButton;
     private javax.swing.JTable foundDatabase_jTable;
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton3;
-    private javax.swing.JButton jButton4;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -361,16 +356,31 @@ public class SetupWindow extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JTable jTable1;
-    private javax.swing.JButton launchScoringBot_jButton;
-    private javax.swing.JTabbedPane main_jTabbedPane;
-    private javax.swing.JPanel scoringSetup_jPanel;
-    private javax.swing.JPanel solver_jPanel;
+    private javax.swing.JButton launchSB_jButton;
+    private javax.swing.JButton removeVuln_jButton;
     private javax.swing.JTable toBeAdded_jTable;
-    private javax.swing.JPanel vulnerabilitySetup_jPanel;
     // End of variables declaration//GEN-END:variables
 
     private void searchForVulns() {
         foundVulns = new ArrayList();
-        foundVulns.add("something");
+        ComputerConnection c = new ComputerConnection(currentOS);
+        for (Vulnerability vuln : file.vulMap.getScans().values()) {
+            try {
+                if (c.sendMessage(vuln.toFindVuln()).equals(vuln.toCompare())) {
+                    foundVulns.add(vuln.getName());
+                }
+            }
+            catch (Exception ex) {
+                
+            }
+        }
+    }
+
+    private int countPoints() {
+        int totalPoints = 0;
+        for (Vulnerability v : selectedVulns) {
+            totalPoints += v.pointsWorth();
+        }
+        return totalPoints;
     }
 }

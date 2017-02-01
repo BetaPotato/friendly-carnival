@@ -16,18 +16,19 @@ public class ScanReturn {
     {
     }
     
-    public String returnScans(String file, int number)
+    public String returnScans(String file, int number) //to reset, un comment and delete return "";
     {
-        offm8.importVul(file);
-        ScanCommand test = offm8.vulMap.getScans().get(number);
-        String os = test.getOS();
-        String name = test.getName();
-        String findCommand = test.getFindCommand();
-        String createCommand = test.getCreateCommand();
-        String certifiedComputers = test.getCertifiedComputers();
-        String worthPoints = test.getWorthPoints();
-        
-        return name+"\n"+os+"\n"+certifiedComputers+"\n"+findCommand+"\n"+createCommand+"\n"+worthPoints;
+//        offm8.importVul(file);
+//        ScanCommand test = offm8.vulMap.getScans().get(number).;
+//        String os = test.getOS();
+//        String name = test.getName();
+//        String findCommand = test.getFindCommand();
+//        String createCommand = test.getCreateCommand();
+//        String certifiedComputers = test.getCertifiedComputers();
+//        String worthPoints = test.getWorthPoints();
+//        
+//        return name+"\n"+os+"\n"+certifiedComputers+"\n"+findCommand+"\n"+createCommand+"\n"+worthPoints;
+return "";
         
     }
 

@@ -1,6 +1,7 @@
 import java.sql.Time;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.concurrent.Future;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableColumnModel;
 import javax.swing.table.DefaultTableModel;
@@ -18,7 +19,7 @@ import javax.swing.table.DefaultTableModel;
  * >:)   -wesley
  */
 public class ScoringBotWindow extends javax.swing.JFrame implements Window {
-    
+    Future<?> scoringBot;
     /**
      * Creates new form scoringBotWindow
      */
@@ -33,6 +34,10 @@ public class ScoringBotWindow extends javax.swing.JFrame implements Window {
         initComponents();
         vulnerabilityNumberDisplay_jLabel.setText(vulnerabilityNumberDisplay_jLabel.getText().split("/")[0] + " / " + totalVulns + ((totalVulns == 1) ? " Vulnerability" : " Vulnerabilities"));
         pointsNumberDisplay_jLabel.setText(pointsNumberDisplay_jLabel.getText().split("/")[0] + " / " + totalPoints + ((totalPoints == 1) ? " Point" : " Points"));
+    }
+    
+    protected void setFuture(Future<?> f) {
+        scoringBot = f;
     }
     
     public void vulnSolved(Vulnerability vuln) {
@@ -96,7 +101,11 @@ public class ScoringBotWindow extends javax.swing.JFrame implements Window {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setMinimumSize(new java.awt.Dimension(526, 408));
-        setPreferredSize(new java.awt.Dimension(526, 484));
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowClosing(java.awt.event.WindowEvent evt) {
+                formWindowClosing(evt);
+            }
+        });
         java.awt.GridBagLayout layout = new java.awt.GridBagLayout();
         layout.columnWidths = new int[] {0, 0, 0, 0, 0, 0, 0};
         layout.rowHeights = new int[] {0, 5, 0, 5, 0, 5, 0, 5, 0, 5, 0, 5, 0, 5, 0, 5, 0, 5, 0};
@@ -192,11 +201,6 @@ public class ScoringBotWindow extends javax.swing.JFrame implements Window {
 
         points_jLabel.setForeground(new java.awt.Color(0, 204, 0));
         points_jLabel.setText("+0");
-        points_jLabel.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                points_jLabelMouseClicked(evt);
-            }
-        });
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 2;
         gridBagConstraints.gridy = 8;
@@ -205,11 +209,6 @@ public class ScoringBotWindow extends javax.swing.JFrame implements Window {
 
         penalties_jLabel.setForeground(new java.awt.Color(204, 0, 0));
         penalties_jLabel.setText("-0");
-        penalties_jLabel.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                penalties_jLabelMouseClicked(evt);
-            }
-        });
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 2;
         gridBagConstraints.gridy = 16;
@@ -269,15 +268,10 @@ public class ScoringBotWindow extends javax.swing.JFrame implements Window {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void points_jLabelMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_points_jLabelMouseClicked
-        //For Testing
-        vulnSolved(new Vulnerability(Vulnerability.LINUX, new char[2], new ArrayList(), "something", new ArrayList(), 10, "Something Evil", false));
-    }//GEN-LAST:event_points_jLabelMouseClicked
-
-    private void penalties_jLabelMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_penalties_jLabelMouseClicked
-        //Also For Testing
-        vulnSolved(new Vulnerability(Vulnerability.LINUX, new char[2], new ArrayList(), "something", new ArrayList(), 10, "Something Evil", true));
-    }//GEN-LAST:event_penalties_jLabelMouseClicked
+    private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
+        this.setVisible(false);
+        this.stopScoringBot(scoringBot);
+    }//GEN-LAST:event_formWindowClosing
 
     /**
      * @param args the command line arguments
@@ -315,7 +309,7 @@ public class ScoringBotWindow extends javax.swing.JFrame implements Window {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new ScoringBotWindow(2, 10).setVisible(true);
+                new ScoringBotWindow().setVisible(true);
             }
         });
     }

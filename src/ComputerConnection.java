@@ -120,6 +120,8 @@ import java.util.concurrent.TimeUnit;
                                         }
                                         Thread.yield();
                                         
+                                        command.clear();
+                                        Thread.yield();
                                         command.addAll(Arrays.asList(commandseg));
                                 }
                                 else
@@ -177,6 +179,7 @@ import java.util.concurrent.TimeUnit;
          */
         private String sendMessage()		//goes out to SSH or Windows
         {
+                //arguments.clear();
                 Process p = null;
                 try
                 {
@@ -197,8 +200,8 @@ import java.util.concurrent.TimeUnit;
                         if (whichOS)    //is true when Linux
                         {
                             //add the necessary extra stuff for Linux
-                            allTogether.add("/bin/bash");
-                            allTogether.add("-s");
+                            //allTogether.add("/bin/bash");
+                            //allTogether.add("-s");
                             for (int i = 0; i < command.size(); i++)
                             {
                                 allTogether.add(command.get(i));
@@ -236,7 +239,8 @@ import java.util.concurrent.TimeUnit;
                         BufferedReader output = new BufferedReader(new InputStreamReader(p.getInputStream()));	//gets a reader that can read the Out and error from the process
                         BufferedReader error = new BufferedReader(new InputStreamReader(p.getErrorStream()));
                         Thread.yield();
-
+                        standardError = "";
+                        standardOut = "";
                         String line;
                         while((line = error.readLine()) != null)	//Keeps looking through the stuff in the pipe until there is nothing left to pull out
                         {

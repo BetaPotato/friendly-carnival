@@ -1,7 +1,9 @@
-1,TRUE,WINDOWS7;WINDOWS8,Netsh Advfirewall show allprofiles | findstr State,State                                 OFFState                                 OFFState                                 OFF,Netsh Advfirewall set allprofiles state off,5,Firewall is turned on,FALSE
-2,TRUE,WINDOWS7;WINDOWS8,"sc query ""TermService"" | findstr STATE",        STATE              : 4  RUNNING ,"sc config ""TermService"" start= off",5,Started Remote Desktop Service,FALSE
-3,TRUE,WINDOWS7;WINDOWS8,net accounts | findstr Length of password history,,net accounts /uniquepw:8,5,Enforce password history,FALSE
-4,TRUE,WINDOWS7;WINDOWS8,net accounts | findstr Maximum password age,,net accounts /maxpwage:14,5,Maximum password age set,FALSE
-5,TRUE,WINDOWS7;WINDOWS8,net accounts | findstr Minimum password age,,net accounts /minpwage:8,5,Minimum password age set,FALSE
-6,TRUE,WINDOWS7;WINDOWS8,net accounts | findstr Minimum password length,,net accounts /minpwlen:8,5,Maximum password age set,FALSE
-7,FALSE,UBUNTU12;UBUNTU14,if [[ ls -la /etc/ssh | grep sshd ]]; then echo $(cat /etc/ssh/sshd_config | grep PermitRootLogin | grep -ic no); else echo 0; fi,1,LOOK AT ME,5,SSH Root Login,FALSE
+1,WINDOWS,WINDOWS7;WINDOWS8,Netsh Advfirewall show allprofiles | findstr State,State                                 OFFState                                 OFFState                                 OFF,Netsh Advfirewall set allprofiles state off,5,Firewall is turned on,FALSE
+2,WINDOWS,WINDOWS7;WINDOWS8,"sc query ""TermService"" | findstr STATE",        STATE              : 4  RUNNING ,"sc config ""TermService"" start= off",5,Started Remote Desktop Service,FALSE
+3,WINDOWS,WINDOWS7;WINDOWS8,net accounts | findstr Length of password history,,net accounts /uniquepw:8,5,Enforce password history,FALSE
+4,WINDOWS,WINDOWS7;WINDOWS8,net accounts | findstr Maximum password age,,net accounts /maxpwage:14,5,Maximum password age set,FALSE
+5,WINDOWS,WINDOWS7;WINDOWS8,net accounts | findstr Minimum password age,,net accounts /minpwage:8,5,Minimum password age set,FALSE
+6,WINDOWS,WINDOWS7;WINDOWS8,net accounts | findstr Minimum password length,,net accounts /minpwlen:8,5,Maximum password age set,FALSE
+7,LINUX,UBUNTU12;UBUNTU14,if [[ ls -la /etc/ssh | grep sshd ]]; then echo $(cat /etc/ssh/sshd_config | grep PermitRootLogin | grep -ic no); else echo 0; fi,1,LOOK AT ME,5,SSH Root Login,FALSE
+8,LINUX,UBUNTU12;UBUNTU14,,,,5,Firewall is turned on,FALSE
+9,LINUX,OPENSUSE,ls /home/wesley/some,somethingCool,,15,U did Something Cool,false

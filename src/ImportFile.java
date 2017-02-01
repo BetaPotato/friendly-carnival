@@ -11,7 +11,7 @@ import java.util.Scanner;
  */
 public class ImportFile {
     public VulnerabilityMap vulMap = new VulnerabilityMap();
-    public void importVul(String fileName) {
+    public void importVul(String fileName) { //To reset, change type of test from Vulnerability to ScanCommand
         Scanner data = null;
         
         try {
@@ -30,16 +30,16 @@ public class ImportFile {
             //Read in each value on the line and create a team
             
             int id = i.nextInt();
-            boolean whichOS = i.nextBoolean();
+            boolean whichOS = i.next().equalsIgnoreCase("linux");
             String certifiedComputers = i.next();
             String findCommand = i.next();
             String compareOutput = i.next();
             String createCommand = i.next();
             int worthPoints = i.nextInt();
             String name = i.next();
-            boolean isPenalty = i.nextBoolean();
+            boolean isPenalty = i.next().equalsIgnoreCase("true");
             
-            ScanCommand test = new ScanCommand(whichOS, certifiedComputers, findCommand, compareOutput, createCommand, worthPoints, name, isPenalty);
+            Vulnerability test = new Vulnerability(whichOS, certifiedComputers, findCommand, compareOutput, createCommand, worthPoints, name, isPenalty);
             vulMap.getScans().put(id, test);
             
             

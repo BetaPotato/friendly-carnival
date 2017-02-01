@@ -25,9 +25,9 @@ public interface Window
      * @param whichOS a boolean of which Operating System the Vulnerability is allowed to <b>run on</b>, NOT that the computer is running on. Should only be {@link #WINDOWS} or {@link #LINUX}.
      * @return A {@code Future<?>} that is given back from the {@code ExecutorService} which is the only real way to access the {@link ScoringBot} Thread.
      */
-    default Future<?> startScoringBot(ArrayList<Vulnerability> vulns, boolean whichOS)
+    default Future<?> startScoringBot(ArrayList<Vulnerability> vulns, boolean whichOS, Window GUI)
     {
-        return exec.submit(new ScoringBot(vulns, whichOS, this));
+        return exec.submit(new ScoringBot(vulns, whichOS, GUI));
     }
     
     /**
